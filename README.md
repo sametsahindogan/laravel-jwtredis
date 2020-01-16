@@ -39,7 +39,7 @@ Next, also in the `app.php` config file, under the `aliases` array, you may want
 
 Finally, you will want to publish the config using the following command:
 ```bash
-php artisan vendor:publish --provider='Sametsahindogan\JWTRedis\JWTRedisServiceProvider::class'
+php artisan vendor:publish --provider='Sametsahindogan\JWTRedis\JWTRedisServiceProvider'
 ```
 
 When everything is complete, don't forget to add this Trait to your user model.
