@@ -142,4 +142,4 @@ You can add this array your own relations anything you want store in Redis.
 ```
 
 ## License
-MIT © [Samet Sahindogan](https://github.com/sametsahindogan/jwt-redis/blob/master/LICENSE)
+MIT © [Samet Sahindogan](https://github.com/sametsahindogan/laravel-jwtredis/blob/master/LICENSE)
