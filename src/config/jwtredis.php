@@ -11,7 +11,7 @@ return [
      *
      * This user model, your auth model.
      */
-    'user_model' =>  \App\Models\User::class,
+    'user_model' =>  \App\User::class,
 
     /**
      *
