@@ -15,7 +15,7 @@ This observer is triggered `when you assign roles & permissions to user, or upda
 
 This package work with together [tymondesigns/jwt-auth](https://github.com/tymondesigns/jwt-auth) and [spatie/laravel-permission](https://github.com/spatie/laravel-permission) package under the hood.
 
-![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Make sure to install and configure these dependencies.` ![#f03c15](https://placehold.it/15/f03c15/000000?text=+)
+![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Make sure to install and configure these dependencies. You must publish, migrate etc. all package.` ![#f03c15](https://placehold.it/15/f03c15/000000?text=+)
  
 - [nrk/predis](https://github.com/nrk/predis) **>= 1.1** (**Recommended 1.1**)
 - [tymondesigns/jwt-auth](https://github.com/tymondesigns/jwt-auth) **>= 1.0** (**Recommended 1.0.x**)
@@ -27,12 +27,35 @@ This package work with together [tymondesigns/jwt-auth](https://github.com/tymon
 composer require sametsahindogan/laravel-jwtredis
 ```
 
-Once this has finished, you will need to add the service provider to the `providers` array in your `app.php` config as follows:
+Once this has finished, you will need to add&change these values in `.env` file:
+```dotenv
+CACHE_DRIVER=redis
+REDIS_CLIENT=predis
+```
+
+Next, you will need to change the `guards` and `providers` arrays in your `config/auth.php` config as follows:
+```php
+'guards' => [
+        'api' => [
+            'driver' => 'jwt_redis_guard',
+            'provider' => 'users'
+        ],
+    ],
+
+'providers' => [
+        'users' => [
+            'driver' => 'jwt_redis_user_provider',
+            'model' =>  App\User::class, /* Your User Model */
+        ],
+    ],
+```
+   
+Next, you will need to add the service provider to the `providers` array in your `config/app.php` config as follows:
 ```php
 Sametsahindogan\JWTRedis\JWTRedisServiceProvider::class,
 ```
 
-Next, also in the `app.php` config file, under the `aliases` array, you may want to add the `RedisCache` facade.
+Next, also in the `config/app.php` config file, under the `aliases` array, you may want to add the `RedisCache` facade.
 ```php
 'RedisCache' => \Sametsahindogan\JWTRedis\Facades\RedisCache::class,
 ```

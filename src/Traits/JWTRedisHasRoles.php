@@ -2,9 +2,8 @@
 
 namespace Sametsahindogan\JWTRedis\Traits;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use \Spatie\Permission\Traits\HasRoles as OriginalHasRole;
+use Spatie\Permission\Traits\HasRoles as OriginalHasRole;
 
 trait JWTRedisHasRoles
 {

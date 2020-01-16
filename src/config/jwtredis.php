@@ -35,7 +35,7 @@ return [
       *
       * If it's option is true, every Role or Permission middleware checked user banned.
       */
-    'check_banned_user' => true,
+    'check_banned_user' => false,
 
     /**
      *
