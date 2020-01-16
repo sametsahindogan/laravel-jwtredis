@@ -15,7 +15,7 @@ This observer is triggered `when you assign roles & permissions to user, or upda
 
 This package work with together [tymondesigns/jwt-auth](https://github.com/tymondesigns/jwt-auth) and [spatie/laravel-permission](https://github.com/spatie/laravel-permission) package under the hood.
 
-![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Make sure to install and configure these dependencies. You must publish, migrate etc. all package.` ![#f03c15](https://placehold.it/15/f03c15/000000?text=+)
+![#](https://placehold.it/15/f03c15/000000?text=+) `Make sure to install and configure these dependencies. You must publish, migrate etc. all packages.` ![#](https://placehold.it/15/f03c15/000000?text=+)
  
 - [nrk/predis](https://github.com/nrk/predis) **>= 1.1** (**Recommended 1.1**)
 - [tymondesigns/jwt-auth](https://github.com/tymondesigns/jwt-auth) **>= 1.0** (**Recommended 1.0.x**)
@@ -88,13 +88,14 @@ You need to add your `$routeMiddleware` array in `app/Http/Kernel.php`
 ```
 
 For authorize user by token; <br>
-( Use this middleware if the user's identity is not important. This middleware only checks if Token is valid. Doesn't authorize or query the database.)
+( Use this middleware if the user's identity is not important. This middleware only checks if Token is valid. Doesn't send query the database.)
 ```php
 Route::get("/example", "ExampleController@example")->middleware('auth');
 ```
 
 To check user authority, you need to this one of these middlewares;<br>
-( Use this middleware if the user's identity is important. This middlewares fetch user from Redis and mark as authorized.)
+( Use this middleware if the user's identity is important. This middlewares fetch user from Redis and mark as authorized. 
+And you will reach all default auth methods anywhere you want. Just call Laravel Auth facades.)
 ```php
 Route::get("/example", "ExampleController@example")->middleware('role:admin|user');
 Route::get("/example", "ExampleController@example")->middleware('permissions:get-user|set-user');
@@ -122,7 +123,7 @@ If you want to use your custom observer class, you can also change this or inher
 'observer' => \Sametsahindogan\JWTRedis\Observers\UserRedisObserver::class,
 ```
 
-If it's option is true, Role or Permission middleware checked user banned.
+If it's option is true, user status checked by necessary middlewares.
 ```php
 'check_banned_user' => false,
 ```
