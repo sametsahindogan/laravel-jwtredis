@@ -3,13 +3,13 @@
 return [
 
     /**
-     * This observer class, listening event on your models.
+     * This observer class, listening event on your user model.
      */
     'observer' => \Sametsahindogan\JWTRedis\Observers\UserRedisObserver::class,
 
     /**
      *
-     * This user model, your auth model.
+     * This is your user model.
      */
     'user_model' =>  \App\User::class,
 
@@ -21,7 +21,7 @@ return [
 
     /**
      *
-     * User stored in Redis redis_ttl value second.
+     * User stored in Redis redis_ttl value time.
      */
     'redis_ttl' => 60,
 
@@ -33,7 +33,7 @@ return [
 
      /**
       *
-      * If it's option is true, every Role or Permission middleware checked user banned.
+      * If it's option is true, every necessary middleware check if user banned.
       */
     'check_banned_user' => false,
 
@@ -45,7 +45,7 @@ return [
 
     /**
      *
-     * Return banned user response for this user status.
+     * Return banned user response for this user statuses.
      */
     'banned_statuses' => ['banned', 'deactivate'],
 
