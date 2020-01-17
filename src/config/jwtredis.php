@@ -33,7 +33,7 @@ return [
 
      /**
       *
-      * If it's option is true, every necessary middleware check if user banned.
+      * If check banned user option is true, every necessary middleware check if user banned.
       */
     'check_banned_user' => false,
 
@@ -45,12 +45,12 @@ return [
 
     /**
      *
-     * Return banned user response for this user statuses.
+     * Return 'user is banned' response for this user statuses.
      */
     'banned_statuses' => ['banned', 'deactivate'],
 
     /**
-     * You can add this array your own relations anything you want.
+     * You can add this array to your own relations, anything you want to store in Redis.
      */
     'cache_relations' => [
         'roles.permissions',
