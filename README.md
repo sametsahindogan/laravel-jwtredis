@@ -2,8 +2,8 @@
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://raw.githubusercontent.com/kevoj/redis-jwt/master/LICENSE)
 
-> This package allow management of storing authenticated users on Redis with (roles&permissions, 
-status and anything relation you want). 
+> This package allows JWT-authenticated users to be stored and management in Redis with
+their roles, permissions, statuses, and anything you want.
 
 <a><img src="https://cdn.auth0.com/blog/jwtalgos/logo.png" width="80"></a>
 <a><img src="https://chris.lu/upload/images/redis.png" width="80"></a>
