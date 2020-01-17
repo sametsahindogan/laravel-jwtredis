@@ -1,6 +1,6 @@
 {
     "name": "sametsahindogan/laravel-jwtredis",
-    "description": "This package allows JWT-authenticated users to be stored and management in Redis with\ntheir roles, permissions, statuses, and anything you want.",
+    "description": "This package allows JWT-authenticated users to be stored and management in Redis with their roles, permissions, statuses, and anything you want.",
     "type": "library",
     "require": {
         "php": ">=7.2",
