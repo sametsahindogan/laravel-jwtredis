@@ -6,9 +6,8 @@ use Sametsahindogan\JWTRedis\Services\ErrorService\ErrorBuilder;
 use Sametsahindogan\JWTRedis\Services\Result\ErrorResult;
 use Closure;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Support\Facades\Auth;
 
-class RoleMiddleware
+class RoleMiddleware extends BaseMiddleware
 {
     /**
      * @param $request
@@ -19,11 +18,14 @@ class RoleMiddleware
      */
     public function handle($request, Closure $next, $role)
     {
-        $request->authedUser = Auth::user();
+        $this->setIfClaimIsNotExist($request);
+
+        $this->setAuthedUser($request);
 
         $roles = is_array($role) ? $role : explode('|', $role);
 
         if(config('jwtredis.check_banned_user')){
+
             if (!$request->authedUser->checkUserStatus()) {
                 return response()->json(
                     new ErrorResult(
@@ -36,7 +38,7 @@ class RoleMiddleware
             }
         }
 
-        if (!$request->authedUser->hasAnyRole($roles) || !$request->authedUser->can('get-users')) {
+        if (!$request->authedUser->hasAnyRole($roles)) {
             return response()->json(
                 new ErrorResult(
                     (new ErrorBuilder())

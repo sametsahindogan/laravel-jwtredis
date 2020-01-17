@@ -3,19 +3,28 @@
 namespace Sametsahindogan\JWTRedis\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 use Sametsahindogan\JWTRedis\Services\ErrorService\ErrorBuilder;
 use Sametsahindogan\JWTRedis\Services\Result\ErrorResult;
 
-class PermissionMiddleware
+class PermissionMiddleware extends BaseMiddleware
 {
+
+    /**
+     *
+     * Handle an incoming request.
+     *
+     * @param $request
+     * @param Closure $next
+     * @param $permission
+     * @return \Illuminate\Http\JsonResponse|mixed
+     */
     public function handle($request, Closure $next, $permission)
     {
-        $request->authedUser = Auth::user();
+        $this->setIfClaimIsNotExist($request);
 
-        $permissions = is_array($permission)
-            ? $permission
-            : explode('|', $permission);
+        $this->setAuthedUser($request);
+
+        $permissions = is_array($permission) ? $permission : explode('|', $permission);
 
         foreach ($permissions as $permission) {
             if ($request->authedUser->can($permission)) {

@@ -8,10 +8,8 @@ use Sametsahindogan\JWTRedis\Services\Result\ErrorResult;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
-use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Token;
 
-class Authenticate
+class Authenticate extends BaseMiddleware
 {
     /**
      * Handle an incoming request.
@@ -24,20 +22,7 @@ class Authenticate
     {
         try {
 
-            /** @var Token $token */
-            $token = JWTAuth::getPayload(JWTAuth::getToken());
-
-            if (!$token) {
-
-                return response()->json(
-                    new ErrorResult(
-                        (new ErrorBuilder())
-                            ->title('Operation Failed')
-                            ->message('User not found.')
-                            ->extra([])
-                    )
-                );
-            }
+            $this->setIfClaimIsNotExist($request);
 
         } catch (TokenExpiredException|TokenInvalidException|JWTException $e) {
 
@@ -51,8 +36,6 @@ class Authenticate
             );
 
         }
-
-        $request->claim = $token->get('sub');
 
         return $next($request);
     }

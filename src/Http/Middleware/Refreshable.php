@@ -30,7 +30,6 @@ class Refreshable
     protected $manager;
 
     /**
-     * Create a new BaseMiddleware instance.
      *
      * @param \Tymon\JWTAuth\JWTAuth $auth
      *
@@ -60,6 +59,7 @@ class Refreshable
 
             $token = $this->auth->parseToken()->refresh();
 
+            /** Application need this assignment for using Laravel's Auth facade. */
             $request->claim = $this->manager->decode(new Token($token))->get('sub');
 
         } catch (JWTException $e) {
@@ -103,7 +103,6 @@ class Refreshable
     protected function setAuthenticationResponse($token = null)
     {
         if (config('jwtredis.check_banned_user')) {
-
             if (!Auth::user()->checkUserStatus()) {
                 return response()->json(
                     new ErrorResult(
@@ -114,7 +113,6 @@ class Refreshable
                     )
                 );
             }
-
         }
 
         $token = $token ?: $this->auth->refresh();
