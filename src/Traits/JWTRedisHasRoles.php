@@ -86,20 +86,20 @@ trait JWTRedisHasRoles
     public function hasPermissionViaRole($permission): bool
     {
         $roles = $this->roles;
-        $allow = false;
 
         if (is_string($permission)) {
             foreach ($roles as $role) {
-                if ($role->permissions->contains('name', $permission)) $allow = true;
+                if ($role->permissions->contains('name', $permission)) return true;
             }
         }
 
         if (is_int($permission)) {
             foreach ($roles as $role) {
-                if ($role->permissions->contains('id', $permission)) $allow = true;
+                if ($role->permissions->contains('id', $permission)) return true;
             }
         }
-        return $allow;
+
+        return false;
     }
 
     /**
@@ -108,7 +108,7 @@ trait JWTRedisHasRoles
     public function checkUserStatus()
     {
         $column = config('jwtredis.status_column_title');
-        $values = config('jwtredis.banned_statuses');
+        $values = config('jwtredis.banned_status');
 
         return !in_array($this->$column, $values);
     }
