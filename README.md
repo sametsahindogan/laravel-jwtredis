@@ -60,18 +60,13 @@ Finally, you will want to publish the config using the following command:
 ```bash
 php artisan vendor:publish --provider='Sametsahindogan\JWTRedis\JWTRedisServiceProvider'
 ```
+
+## Configurations
+
 When everything is complete, don't forget to add this Trait to your user model.
 ```php
 use JWTRedisHasRoles;
 ```
-
-## Usage
-
-You do not have any instructions for use. You can use the Laravel's Auth 
-facades as you like. `Auth::user()`, `$user->can('permission')` and 
-all [spatie/laravel-permission](https://github.com/spatie/laravel-permission) package methods etc. 
-every authorization check you made, will always be checked from Redis, not from database.
-
 You need to add `$routeMiddleware` array in `app/Http/Kernel.php`
 ```php
 'auth'               => \Sametsahindogan\JWTRedis\Http\Middleware\Authenticate::class,
@@ -80,24 +75,37 @@ You need to add `$routeMiddleware` array in `app/Http/Kernel.php`
 'permission'         => \Sametsahindogan\JWTRedis\Http\Middleware\PermissionMiddleware::class,
 'role_or_permission' => \Sametsahindogan\JWTRedis\Http\Middleware\RoleOrPermissionMiddleware::class,
 ```
-For user authorization by token; <br>
+
+## Usage
+
+You do not have any instructions for use. This package only affects the background. 
+`All you need to change might be your middleware.(I mentioned this below)` You can use Laravel's Auth facade,
+Tymon's JWTAuth facade and all [spatie/laravel-permission](https://github.com/spatie/laravel-permission) package methods
+as usual.<br>
+
+* For user authorization by token; <br>
 ( Use this middleware if the user's identity is not important. This middleware only checks if Token is valid. Doesn't send to any query to any database.)
 ```php
 Route::get("/example", "ExampleController@example")->middleware('auth');
 ```
-To check user authorization, you need to this one of these middlewares;<br>
-( Use this middleware if the user's identity is important. This middlewares fetch user from Redis and mark as authorized. 
-And you will reach all default Auth facade's methods you want. Just call Laravel's Auth facades.)
+* To check user authorization, you need to this one of these middlewares;<br>
+( Use this middleware if the user's identity is important. This middlewares fetch user from Redis and mark as authorized 
+to Laravel's Request object. And you will reach all default Auth facade's methods you want. Just call Laravel's Auth facades.)
 ```php
 Route::get("/example", "ExampleController@example")->middleware('role:admin|user');
 Route::get("/example", "ExampleController@example")->middleware('permissions:get-user|set-user');
 Route::get("/example", "ExampleController@example")->middleware('role_or_permission:admin|get-user');
 ```
-For refresh token, you can add `refreshable` middleware to route;<br>
-( Also this middleware can refreshes user from Redis. )
+* For refresh token, you can add `refreshable` middleware to route;<br>
+( Also this middleware can refreshes user from Redis if necessary. )
 ```php
 Route::get("/example", "ExampleController@example")->middleware('refreshable');
 ```
+<br>
+
+**After using it as follows, every authorization you made in your 
+application, such as `Auth::user()` or `$user->can('permission')`, is always checked from Redis, not from the database.**
+
 ## Options
 
 You can customize some options in that package `config/jwtredis.php` file.
@@ -127,7 +135,7 @@ If check banned user option is true, user status checked by necessary middleware
     'status_column_title' => 'status',
     'banned_statuses' => ['banned', 'deactivate']
 ```
-You can add this array to your own relations, anything you want to store in Redis.
+You can add this array to your own relations and anything you want to store in Redis.
 ```php
 'cache_relations' => [
         'roles.permissions',
