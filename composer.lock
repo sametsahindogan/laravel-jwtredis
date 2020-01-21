@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8500df722ad96ffa9c8be1639a52f7af",
+    "content-hash": "8940a40f3e871c53246b448af20200cf",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -1084,6 +1084,42 @@
                 "simple-cache"
             ],
             "time": "2017-10-23T01:57:42+00:00"
+        },
+        {
+            "name": "sametsahindogan/response-object-creator",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sametsahindogan/response-object-creator.git",
+                "reference": "615f76527d73121c597aca1b83aa0aa4b4bcd22c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sametsahindogan/response-object-creator/zipball/615f76527d73121c597aca1b83aa0aa4b4bcd22c",
+                "reference": "615f76527d73121c597aca1b83aa0aa4b4bcd22c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sametsahindogan\\ResponseObjectCreator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "sametsahindogan",
+                    "email": "sametsahindogan@gmail.com"
+                }
+            ],
+            "description": "This package provide to standardized response objects for your API.",
+            "time": "2020-01-21T12:03:16+00:00"
         },
         {
             "name": "spatie/laravel-permission",
@@ -2522,6 +2558,8 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=7.2"
+    },
     "platform-dev": []
 }

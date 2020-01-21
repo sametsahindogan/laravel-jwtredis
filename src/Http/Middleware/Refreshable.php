@@ -5,14 +5,14 @@ namespace Sametsahindogan\JWTRedis\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Sametsahindogan\ResponseObjectCreator\ErrorResult;
+use Sametsahindogan\ResponseObjectCreator\ErrorService\ErrorBuilder;
+use Sametsahindogan\ResponseObjectCreator\SuccessResult;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\JWTAuth;
 use Tymon\JWTAuth\Manager;
 use Tymon\JWTAuth\Token;
-use Sametsahindogan\JWTRedis\Services\ErrorService\ErrorBuilder;
-use Sametsahindogan\JWTRedis\Services\Result\ErrorResult;
-use Sametsahindogan\JWTRedis\Services\Result\SuccessResult;
 
 class Refreshable
 {

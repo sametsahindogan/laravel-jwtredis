@@ -3,8 +3,6 @@
 namespace Sametsahindogan\JWTRedis\Http\Middleware;
 
 use Illuminate\Support\Facades\Auth;
-use Sametsahindogan\JWTRedis\Services\ErrorService\ErrorBuilder;
-use Sametsahindogan\JWTRedis\Services\Result\ErrorResult;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Token;
 
