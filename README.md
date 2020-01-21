@@ -1,6 +1,6 @@
 # laravel-jwtredis
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://raw.githubusercontent.com/kevoj/redis-jwt/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://raw.githubusercontent.com/sametsahindogan/laravel-jwtredis/master/LICENSE)
 
 > This package allows JWT-authenticated users to be stored and management in Redis with
 their roles, permissions, statuses and anything you want.
@@ -48,7 +48,7 @@ Next, you will need to change the `guards` and `providers` arrays in your `confi
         ],
     ],
 ```
-Next, you will need to add the service provider to the `providers` array in your `config/app.php` config as follows:
+This package uses auto-discovery to register the service provider but if you'd rather do it manually, the service provider is: add to `providers` array in your `config/app.php` config as follows:
 ```php
 Sametsahindogan\JWTRedis\JWTRedisServiceProvider::class,
 ```
@@ -78,10 +78,8 @@ You need to add `$routeMiddleware` array in `app/Http/Kernel.php`
 
 ## Usage
 
-You do not have any instructions for use. This package only affects the background. 
-`All you need to change might be your middleware.(I mentioned this below)` You can use Laravel's Auth facade,
-Tymon's JWTAuth facade and all [spatie/laravel-permission](https://github.com/spatie/laravel-permission) package methods
-as usual.<br>
+ You do not have any instructions for use. This package only affects the background, functions in an almost identical way to Laravel session authentication, with a few exceptions. `All you need to change might be your middleware.(I mention this below)` You can use Laravel's Auth facade,
+Tymon's JWTAuth facade and all [spatie/laravel-permission](https://github.com/spatie/laravel-permission) package methods as usual.<br>
 
 * For user authorization by token; <br>
 ( Use this middleware if the user's identity is not important. This middleware only checks if Token is valid. Doesn't send to any query to any database.)
