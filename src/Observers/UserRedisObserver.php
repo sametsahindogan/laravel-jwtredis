@@ -2,9 +2,14 @@
 
 namespace Sametsahindogan\JWTRedis\Observers;
 
-use Sametsahindogan\JWTRedis\Facades\RedisCache;
 use Illuminate\Database\Eloquent\Model;
+use Sametsahindogan\JWTRedis\Facades\RedisCache;
+use Sametsahindogan\JWTRedis\Jobs\ProcessObserver;
 
+/**
+ * Class UserRedisObserver
+ * @package Sametsahindogan\JWTRedis\Observers
+ */
 class UserRedisObserver
 {
     /**
@@ -13,9 +18,13 @@ class UserRedisObserver
      */
     public function updated(Model $model)
     {
-        RedisCache::key($model->getRedisKey())
-            ->data($model->load(config('jwtredis.cache_relations')))
-            ->refreshCache();
+        if (config('jwtredis.observer_events_queue')) {
+            dispatch((new ProcessObserver($model, __FUNCTION__)));
+        } else {
+            return RedisCache::key($model->getRedisKey())
+                ->data($model->load(config('jwtredis.cache_relations')))
+                ->refreshCache();
+        }
     }
 
     /**
@@ -24,7 +33,10 @@ class UserRedisObserver
      */
     public function deleted(Model $model)
     {
-        RedisCache::key($model->getRedisKey())
-            ->removeCache();
+        if (config('jwtredis.observer_events_queue')) {
+            dispatch((new ProcessObserver($model, __FUNCTION__)));
+        } else {
+            return RedisCache::key($model->getRedisKey())->removeCache();
+        }
     }
 }

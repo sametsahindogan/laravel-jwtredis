@@ -9,6 +9,13 @@ return [
 
     /**
      *
+     * If observer async option is true, model's events are processed in the queue.
+     * ! Don't forget to run Laravel Queue Worker.
+     */
+    'observer_events_queue' => false,
+
+    /**
+     *
      * This is your user model.
      */
     'user_model' =>  \App\User::class,
@@ -56,5 +63,4 @@ return [
         'roles.permissions',
         'permissions'
     ],
-
 ];
