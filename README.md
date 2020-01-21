@@ -21,6 +21,7 @@ This package work with together [tymondesigns/jwt-auth](https://github.com/tymon
 - [nrk/predis](https://github.com/nrk/predis) **>= 1.1** (**Recommended 1.1**)
 - [tymondesigns/jwt-auth](https://github.com/tymondesigns/jwt-auth) **>= 1.0** (**Recommended 1.0.x**)
 - [spatie/laravel-permission](https://github.com/spatie/laravel-permission) **>= 3.3** (**Recommended 3.3**)
+- [sametsahindogan/response-object-creator](https://github.com/sametsahindogan/response-object-creator) **>= 1.0.x** (**Recommended 1.0.2**)
 
 ## Installation
 
@@ -116,6 +117,12 @@ If you want to use your custom observer class, you can also change this or inher
 ```php
 'observer' => \Sametsahindogan\JWTRedis\Observers\UserRedisObserver::class,
 ```
+If observer events queue option is true, model's events are dispatched in the queue.
+*  Don't forget to set Queue Driver for Redis and run Laravel Queue Worker.
+```php
+'observer_events_queue' => true,
+```
+
 If you want to store user in Redis until JWT expire time, this option must be true.
 ```php
 'redis_ttl_jwt' => true,
