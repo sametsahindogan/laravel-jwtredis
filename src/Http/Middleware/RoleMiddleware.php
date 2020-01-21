@@ -6,6 +6,9 @@ use Sametsahindogan\JWTRedis\Services\ErrorService\ErrorBuilder;
 use Sametsahindogan\JWTRedis\Services\Result\ErrorResult;
 use Closure;
 use Illuminate\Auth\Access\AuthorizationException;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 class RoleMiddleware extends BaseMiddleware
 {
@@ -18,7 +21,21 @@ class RoleMiddleware extends BaseMiddleware
      */
     public function handle($request, Closure $next, $role)
     {
-        $this->setIfClaimIsNotExist($request);
+        try {
+
+            $this->setIfClaimIsNotExist($request);
+
+        } catch (TokenExpiredException|TokenInvalidException|JWTException $e) {
+
+            return response()->json(
+                new ErrorResult(
+                    (new ErrorBuilder())
+                        ->title('Operation Failed')
+                        ->message($e->getMessage())
+                        ->extra([])
+                )
+            );
+        }
 
         $this->setAuthedUser($request);
 

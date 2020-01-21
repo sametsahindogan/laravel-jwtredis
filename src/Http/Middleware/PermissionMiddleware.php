@@ -5,6 +5,9 @@ namespace Sametsahindogan\JWTRedis\Http\Middleware;
 use Closure;
 use Sametsahindogan\JWTRedis\Services\ErrorService\ErrorBuilder;
 use Sametsahindogan\JWTRedis\Services\Result\ErrorResult;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 class PermissionMiddleware extends BaseMiddleware
 {
@@ -20,7 +23,21 @@ class PermissionMiddleware extends BaseMiddleware
      */
     public function handle($request, Closure $next, $permission)
     {
-        $this->setIfClaimIsNotExist($request);
+        try {
+
+            $this->setIfClaimIsNotExist($request);
+
+        } catch (TokenExpiredException|TokenInvalidException|JWTException $e) {
+
+            return response()->json(
+                new ErrorResult(
+                    (new ErrorBuilder())
+                        ->title('Operation Failed')
+                        ->message($e->getMessage())
+                        ->extra([])
+                )
+            );
+        }
 
         $this->setAuthedUser($request);
 
@@ -36,7 +53,7 @@ class PermissionMiddleware extends BaseMiddleware
             new ErrorResult(
                 (new ErrorBuilder())
                     ->title('Operation Failed')
-                    ->message('User does not have the right roles.')
+                    ->message('User does not have the right permissions.')
                     ->extra([])
             )
         );
