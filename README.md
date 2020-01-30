@@ -102,7 +102,7 @@ Route::get("/example", "ExampleController@example")->middleware('refreshable');
 ```
 <br>
 
-**After using it as follows, every authorization you made in your 
+**After using it as above, every authorization you made in your 
 application, such as `Auth::user()` or `$user->can('permission')`, is always checked from Redis, not from the database.**
 
 ## Options
