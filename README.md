@@ -82,7 +82,7 @@ You need to add `$routeMiddleware` array in `app/Http/Kernel.php`
  You do not have any instructions for use. This package only affects the background, functions in an almost identical way to Laravel session authentication, with a few exceptions. `All you need to change might be your middleware.(I mention this below)` You can use Laravel's Auth facade,
 Tymon's JWTAuth facade and all [spatie/laravel-permission](https://github.com/spatie/laravel-permission) package methods as usual.<br>
 
-* For user authorization by token; <br>
+* For user authentication by token; <br>
 ( Use this middleware if the user's identity is not important. This middleware only checks if Token is valid. Doesn't send to any query to any database.)
 ```php
 Route::get("/example", "ExampleController@example")->middleware('auth');
