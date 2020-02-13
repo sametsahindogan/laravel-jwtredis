@@ -79,7 +79,7 @@ You need to add `$routeMiddleware` array in `app/Http/Kernel.php`
 
 ## Usage
 
- You do not have any instructions for use. This package only affects the background, functions in an almost identical way to Laravel session authentication, with a few exceptions. `All you need to change might be your middleware.(I mention this below)` You can use Laravel's Auth facade,
+ You do not have any instructions for use. This package only affects the background, functions in an almost identical way to Laravel session authentication, with a few exceptions. `All you have to do is change your middleware.(I mention this below)` You can use Laravel's Auth facade,
 Tymon's JWTAuth facade and all [spatie/laravel-permission](https://github.com/spatie/laravel-permission) package methods as usual.<br>
 
 * For user authentication by token; <br>
@@ -95,12 +95,14 @@ Route::get("/example", "ExampleController@example")->middleware('role:admin|user
 Route::get("/example", "ExampleController@example")->middleware('permissions:get-user|set-user');
 Route::get("/example", "ExampleController@example")->middleware('role_or_permission:admin|get-user');
 ```
-* For refresh token, you can add `refreshable` middleware to route;<br>
+* To refresh the token, you can add the `refreshable` middleware to the required route. You don't need to take any action on the controller of this route;<br>
 ( Also this middleware can refreshes user from Redis if necessary. )
 ```php
 Route::get("/example", "ExampleController@example")->middleware('refreshable');
 ```
 <br>
+
+`If you want to do different things, you can override those mentioned middlewares.`
 
 **After using it as above, every authorization you made in your 
 application, such as `Auth::user()` or `$user->can('permission')`, is always checked from Redis, not from the database.**
@@ -146,6 +148,16 @@ You can add this array to your own relations and anything you want to store in R
         'roles.permissions',
         'permissions'
     ],
+```
+You can customize error code,message,title for your application.
+```php
+ 'errors' => [
+        'TokenNotProvidedException' => [
+            'title' => 'Your custom title',
+            'message' => 'Your custom error message.',
+            'code' => 99999
+        ]
+]
 ```
 
 ## License
