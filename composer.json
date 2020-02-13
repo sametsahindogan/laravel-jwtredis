@@ -25,7 +25,7 @@
     "extra": {
         "laravel": {
             "aliases": {
-                "JWTAuth": "Sametsahindogan\\JWTRedis\\Facades\\JWTAuth"
+                "RedisCache": "Sametsahindogan\\JWTRedis\\Facades\\RedisCache"
             },
             "providers": [
                 "Sametsahindogan\\JWTRedis\\JWTRedisServiceProvider"
