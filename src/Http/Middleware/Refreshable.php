@@ -9,7 +9,7 @@ use Sametsahindogan\ResponseObjectCreator\ErrorResult;
 use Sametsahindogan\ResponseObjectCreator\ErrorService\ErrorBuilder;
 use Sametsahindogan\ResponseObjectCreator\SuccessResult;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\JWTAuth;
 use Tymon\JWTAuth\Manager;
 use Tymon\JWTAuth\Token;
@@ -62,13 +62,13 @@ class Refreshable
             /** Application need this assignment for using Laravel's Auth facade. */
             $request->claim = $this->manager->decode(new Token($token))->get('sub');
 
-        } catch (JWTException $e) {
+        } catch (TokenInvalidException|JWTException $e) {
 
             return response()->json(
                 new ErrorResult(
                     (new ErrorBuilder())
                         ->title('Operation Failed')
-                        ->message($e->getMessage() . $e->getCode())
+                        ->message($e->getMessage())
                         ->extra([])
                 )
             );
@@ -85,13 +85,18 @@ class Refreshable
      * @param \Illuminate\Http\Request $request
      *
      * @return void
-     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
-     *
      */
     protected function checkForToken(Request $request)
     {
         if (!$this->auth->parser()->setRequest($request)->hasToken()) {
-            throw new UnauthorizedHttpException('jwt-auth', 'Token not provided');
+            return response()->json(
+                new ErrorResult(
+                    (new ErrorBuilder())
+                        ->title('Operation Failed')
+                        ->message('Token not provided.')
+                        ->extra([])
+                )
+            );
         }
     }
 
