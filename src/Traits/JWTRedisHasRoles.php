@@ -108,7 +108,7 @@ trait JWTRedisHasRoles
     public function checkUserStatus()
     {
         $column = config('jwtredis.status_column_title');
-        $values = config('jwtredis.banned_status');
+        $values = config('jwtredis.banned_statuses');
 
         return !in_array($this->$column, $values);
     }
