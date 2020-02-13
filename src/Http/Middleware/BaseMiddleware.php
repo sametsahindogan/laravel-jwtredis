@@ -47,7 +47,7 @@ abstract class BaseMiddleware
      */
     protected function getErrorResponse($exception)
     {
-        $error = config('jwtredis.error_codes.'.class_basename($exception)) ?? config('jwtredis.error_codes.default');
+        $error = config('jwtredis.errors.'.class_basename($exception)) ?? config('jwtredis.errors.default');
 
         return response()->json(
             new ErrorResult(

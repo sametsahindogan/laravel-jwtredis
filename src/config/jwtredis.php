@@ -65,10 +65,9 @@ return [
     ],
 
     /**
-     * You can customize the error messages and error codes.
+     * You can customize error code,message,title for your application.
      */
-    'error_codes' => [
-
+    'errors' => [
         'default' => [
             'title' => 'Operation Failed',
             'message' => 'An error occurred.',
