@@ -3,6 +3,8 @@
 namespace Sametsahindogan\JWTRedis\Http\Middleware;
 
 use Illuminate\Support\Facades\Auth;
+use Sametsahindogan\ResponseObjectCreator\ErrorResult;
+use Sametsahindogan\ResponseObjectCreator\ErrorService\ErrorBuilder;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Token;
 
@@ -33,10 +35,27 @@ abstract class BaseMiddleware
      * then will always be stored in this Request object.
      *
      * @param $request
-     * @return bool
      */
     protected function setAuthedUser($request)
     {
         $request->authedUser = Auth::user();
+    }
+
+    /**
+     * @param $exception
+     * @return \Illuminate\Config\Repository|mixed
+     */
+    protected function getErrorResponse($exception)
+    {
+        $error = config('jwtredis.error_codes.'.class_basename($exception)) ?? config('jwtredis.error_codes.default');
+
+        return response()->json(
+            new ErrorResult(
+                (new ErrorBuilder())
+                    ->title($error['title'])
+                    ->message($error['message'])
+                    ->code($error['code'])
+            )
+        );
     }
 }

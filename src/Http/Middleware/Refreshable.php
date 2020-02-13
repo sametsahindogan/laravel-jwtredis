@@ -5,8 +5,6 @@ namespace Sametsahindogan\JWTRedis\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Sametsahindogan\ResponseObjectCreator\ErrorResult;
-use Sametsahindogan\ResponseObjectCreator\ErrorService\ErrorBuilder;
 use Sametsahindogan\ResponseObjectCreator\SuccessResult;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
@@ -14,7 +12,7 @@ use Tymon\JWTAuth\JWTAuth;
 use Tymon\JWTAuth\Manager;
 use Tymon\JWTAuth\Token;
 
-class Refreshable
+class Refreshable extends BaseMiddleware
 {
 
     /**
@@ -64,14 +62,7 @@ class Refreshable
 
         } catch (TokenInvalidException|JWTException $e) {
 
-            return response()->json(
-                new ErrorResult(
-                    (new ErrorBuilder())
-                        ->title('Operation Failed')
-                        ->message($e->getMessage())
-                        ->extra([])
-                )
-            );
+            return $this->getErrorResponse($e);
 
         }
 
@@ -89,14 +80,7 @@ class Refreshable
     protected function checkForToken(Request $request)
     {
         if (!$this->auth->parser()->setRequest($request)->hasToken()) {
-            return response()->json(
-                new ErrorResult(
-                    (new ErrorBuilder())
-                        ->title('Operation Failed')
-                        ->message('Token not provided.')
-                        ->extra([])
-                )
-            );
+            return $this->getErrorResponse('TokenNotProvided');
         }
     }
 
@@ -109,14 +93,7 @@ class Refreshable
     {
         if (config('jwtredis.check_banned_user')) {
             if (!Auth::user()->checkUserStatus()) {
-                return response()->json(
-                    new ErrorResult(
-                        (new ErrorBuilder())
-                            ->title('Operation Failed')
-                            ->message('Your account has been blocked by the administrator.')
-                            ->extra([])
-                    )
-                );
+                return $this->getErrorResponse('AccountBlockedException');
             }
         }
 

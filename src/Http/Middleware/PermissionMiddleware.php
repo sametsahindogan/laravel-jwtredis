@@ -11,7 +11,6 @@ use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 class PermissionMiddleware extends BaseMiddleware
 {
-
     /**
      *
      * Handle an incoming request.
@@ -24,19 +23,9 @@ class PermissionMiddleware extends BaseMiddleware
     public function handle($request, Closure $next, $permission)
     {
         try {
-
             $this->setIfClaimIsNotExist($request);
-
         } catch (TokenExpiredException|TokenInvalidException|JWTException $e) {
-
-            return response()->json(
-                new ErrorResult(
-                    (new ErrorBuilder())
-                        ->title('Operation Failed')
-                        ->message($e->getMessage())
-                        ->extra([])
-                )
-            );
+            return $this->getErrorResponse($e);
         }
 
         $this->setAuthedUser($request);
@@ -49,13 +38,6 @@ class PermissionMiddleware extends BaseMiddleware
             }
         }
 
-        return response()->json(
-            new ErrorResult(
-                (new ErrorBuilder())
-                    ->title('Operation Failed')
-                    ->message('User does not have the right permissions.')
-                    ->extra([])
-            )
-        );
+        return $this->getErrorResponse('PermissionException');
     }
 }

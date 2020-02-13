@@ -22,19 +22,9 @@ class RoleMiddleware extends BaseMiddleware
     public function handle($request, Closure $next, $role)
     {
         try {
-
             $this->setIfClaimIsNotExist($request);
-
         } catch (TokenExpiredException|TokenInvalidException|JWTException $e) {
-
-            return response()->json(
-                new ErrorResult(
-                    (new ErrorBuilder())
-                        ->title('Operation Failed')
-                        ->message($e->getMessage())
-                        ->extra([])
-                )
-            );
+            return $this->getErrorResponse($e);
         }
 
         $this->setAuthedUser($request);
@@ -42,28 +32,13 @@ class RoleMiddleware extends BaseMiddleware
         $roles = is_array($role) ? $role : explode('|', $role);
 
         if(config('jwtredis.check_banned_user')){
-
             if (!$request->authedUser->checkUserStatus()) {
-                return response()->json(
-                    new ErrorResult(
-                        (new ErrorBuilder())
-                            ->title('Operation Failed')
-                            ->message('Your account has been blocked by the administrator.')
-                            ->extra([])
-                    )
-                );
+                return $this->getErrorResponse('AccountBlockedException');
             }
         }
 
         if (!$request->authedUser->hasAnyRole($roles)) {
-            return response()->json(
-                new ErrorResult(
-                    (new ErrorBuilder())
-                        ->title('Operation Failed')
-                        ->message('User does not have the right roles.')
-                        ->extra([])
-                )
-            );
+            return $this->getErrorResponse('RoleException');
         }
 
         return $next($request);

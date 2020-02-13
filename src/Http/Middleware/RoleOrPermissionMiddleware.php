@@ -22,19 +22,9 @@ class RoleOrPermissionMiddleware extends BaseMiddleware
     public function handle($request, Closure $next, $roleOrPermission)
     {
         try {
-
             $this->setIfClaimIsNotExist($request);
-
         } catch (TokenExpiredException|TokenInvalidException|JWTException $e) {
-
-            return response()->json(
-                new ErrorResult(
-                    (new ErrorBuilder())
-                        ->title('Operation Failed')
-                        ->message($e->getMessage())
-                        ->extra([])
-                )
-            );
+            return $this->getErrorResponse($e);
         }
 
         $this->setAuthedUser($request);
@@ -42,14 +32,7 @@ class RoleOrPermissionMiddleware extends BaseMiddleware
         $rolesOrPermissions = is_array($roleOrPermission) ? $roleOrPermission : explode('|', $roleOrPermission);
 
         if (!$request->authedUser->hasAnyRole($rolesOrPermissions) && !$request->authedUser->hasAnyPermission($rolesOrPermissions)) {
-            return response()->json(
-                new ErrorResult(
-                    (new ErrorBuilder())
-                        ->title('Operation Failed')
-                        ->message('User does not have the right roles or permissions.')
-                        ->extra([])
-                )
-            );
+            return $this->getErrorResponse('RoleOrPermissionException');
         }
 
         return $next($request);

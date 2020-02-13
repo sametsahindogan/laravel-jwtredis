@@ -3,9 +3,8 @@
 namespace Sametsahindogan\JWTRedis\Http\Middleware;
 
 use Closure;
-use Sametsahindogan\ResponseObjectCreator\ErrorResult;
-use Sametsahindogan\ResponseObjectCreator\ErrorService\ErrorBuilder;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
@@ -24,16 +23,9 @@ class Authenticate extends BaseMiddleware
 
             $this->setIfClaimIsNotExist($request);
 
-        } catch (TokenExpiredException|TokenInvalidException|JWTException $e) {
+        } catch (TokenExpiredException|TokenInvalidException|JWTException|TokenBlacklistedException $e) {
 
-            return response()->json(
-                new ErrorResult(
-                    (new ErrorBuilder())
-                        ->title('Operation Failed')
-                        ->message($e->getMessage())
-                        ->extra([])
-                )
-            );
+            return $this->getErrorResponse($e);
 
         }
 
