@@ -160,5 +160,9 @@ You can customize error code,message,title for your application.
 ]
 ```
 
+## Example Project
+
+Here is an [example usage](https://github.com/sametsahindogan/laravel-jwtredis-example) using laravel-jwtredis. You can examine in detail.
+
 ## License
 MIT © [Samet Sahindogan](https://github.com/sametsahindogan/laravel-jwtredis/blob/master/LICENSE)
