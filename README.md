@@ -164,5 +164,16 @@ You can customize error code,message,title for your application.
 
 Here is an [example](https://github.com/sametsahindogan/laravel-jwtredis-example) using laravel-jwtredis. You can examine in detail.
 
+## Performance Improvement Tips
+This package requirement the predis package by default.
+
+You may install the PhpRedis PHP extension via PECL. The extension is more complex to install but may yield better performance for applications that make heavy use of Redis. Predis is the alternative for PhpRedis on pure PHP and does not require any additional C extension by default.
+
+"PhpRedis is faster about x6 times. Using igbinary serializer reduces stored data size about 3x times. If Redis installed on separate machines, reducing network traffic is a very significant speedup."
+
+In my opinion, using [PhpRedis](https://github.com/phpredis/phpredis) and serializer as igbinary ([Lodash](https://github.com/akalongman/laravel-lodash) package it provide this for Laravel.) in production environment gives a great performance.
+
+You can review this  [article](https://medium.com/@akalongman/phpredis-vs-predis-comparison-on-real-production-data-a819b48cbadb) for performance comparison [PhpRedis](https://github.com/phpredis/phpredis) vs. [Predis](https://github.com/nrk/predis).
+
 ## License
 MIT © [Samet Sahindogan](https://github.com/sametsahindogan/laravel-jwtredis/blob/master/LICENSE)
