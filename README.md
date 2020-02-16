@@ -9,7 +9,7 @@ their roles, permissions, statuses and anything you want.
 <a><img src="https://chris.lu/upload/images/redis.png" width="80"></a>
 
 >Also this package have an observer for listening and updating  to your user model 
-on Redis.This observer is triggered `when you assign roles & permissions to user, or update
+on Redis. This observer is triggered `when you assign roles & permissions to user, or update
 and delete to your user` model.
 
 ## Requirements
@@ -53,18 +53,14 @@ This package uses auto-discovery to register the service provider but if you'd r
 ```php
 Sametsahindogan\JWTRedis\JWTRedisServiceProvider::class,
 ```
-Next, also in the `config/app.php` config file, under the `aliases` array, you may want to add the `RedisCache` facade.
-```php
-'RedisCache' => \Sametsahindogan\JWTRedis\Facades\RedisCache::class,
-```
-Finally, you will want to publish the config using the following command:
+You will want to publish the config using the following command:
 ```bash
 php artisan vendor:publish --provider='Sametsahindogan\JWTRedis\JWTRedisServiceProvider'
 ```
 
 ## Configurations
 
-When everything is complete, don't forget to add this Trait to your user model.
+When everything is done, don't forget to add this Trait to your user model.
 ```php
 use JWTRedisHasRoles;
 ```
@@ -109,62 +105,164 @@ application, such as `Auth::user()` or `$user->can('permission')`, is always che
 
 ## Options
 
-You can customize some options in that package `config/jwtredis.php` file.
+You can customize some options in that package. Check `config/jwtredis.php` file.
 
-You can set your user model.
+* User Model
 ```php
-'user_model' =>  \App\User::class,
+    /*
+    |--------------------------------------------------------------------------
+    | Your User Model
+    |--------------------------------------------------------------------------
+    |
+    | You can set specific user model.
+    |
+    */
+    'user_model' => \App\Models\User::class,
 ```
-If you want to use your custom observer class, you can also change this or inherit this class.
+* Observer
 ```php
-'observer' => \Sametsahindogan\JWTRedis\Observers\UserRedisObserver::class,
+     /*
+     |--------------------------------------------------------------------------
+     | JWTRedis User Model Observer
+     |--------------------------------------------------------------------------
+     |
+     | This observer class, listening all events on your user model. Is triggered
+     | when you assign roles & permissions to user, or update and delete to
+     | your user model.
+     |
+     */
+    'observer' => \Sametsahindogan\JWTRedis\Observers\UserRedisObserver::class,
 ```
-If observer events queue option is true, model's events are dispatched in the queue.
-*  Don't forget to set Queue Driver for Redis and run Laravel Queue Worker.
+* Events Queue
 ```php
-'observer_events_queue' => true,
+    /*
+    |--------------------------------------------------------------------------
+    | Observer Events Are Queued
+    |--------------------------------------------------------------------------
+    |
+    | If this option is true, model's events are processed as a job on queue.
+    |
+    | * ~ Don't forget to run Queue Worker if this option is true. ~ *
+    |
+    */
+    'observer_events_queue' => true,
 ```
+* Storing Time
+```php
+/*
+    |--------------------------------------------------------------------------
+    | Store on Redis up to jwt_ttl value.
+    |--------------------------------------------------------------------------
+    |
+    | If it's option is true, user stored in Redis up to jwt_ttl value time.
+    |
+    */
+    'redis_ttl_jwt' => true,
 
-If you want to store user in Redis until JWT expire time, this option must be true.
-```php
-'redis_ttl_jwt' => true,
+    /*
+    |--------------------------------------------------------------------------
+    | Store on Redis up to specific time
+    |--------------------------------------------------------------------------
+    |
+    | If you don't want to store user in Redis until JWT expire time, 
+    | you can set this value as minute.
+    |
+    */
+    'redis_ttl' => 60,
 ```
-- If you don't want to store user in Redis until JWT expire time, you can set this value as minute.
+* Cache Prefix
 ```php
-    'redis_ttl' => 60
+    /*
+    |--------------------------------------------------------------------------
+    | Cache Prefix
+    |--------------------------------------------------------------------------
+    |
+    | If it's user id is 1, this user stored in Redis as auth_1.
+    |
+    */
+    'redis_auth_prefix' => 'auth_',
 ```
-If check banned user option is true, user status checked by necessary middlewares.
+* Banned User Check
 ```php
-'check_banned_user' => false,
-```
-- If you want to check banned user; you can set your own table column title and status values.
-```php
+    /*
+    |--------------------------------------------------------------------------
+    | Banned User Checking
+    |--------------------------------------------------------------------------
+    |
+    | If the check_banned_user option is true, that users cannot access
+    | the your application.
+    |
+    */
+    'check_banned_user' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Status Column For Banned User Checking
+    |--------------------------------------------------------------------------
+    |
+    | You can set your specific column name of your user model.
+    |
+    */
     'status_column_title' => 'status',
-    'banned_statuses' => ['banned', 'deactivate']
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Restricted statuses For Banned User Checking
+    |--------------------------------------------------------------------------
+    |
+    | If the user has one of these statuses and trying to reach your application,
+    | JWTRedis throws AccountBlockedException.
+    | You can set the message (check it errors array) that will return in this
+    | exception.
+    |
+    */
+    'banned_statuses' => [
+        'banned',
+        'deactivate'
+    ],
 ```
-You can add this array to your own relations and anything you want to store in Redis.
+Relation Caching
 ```php
-'cache_relations' => [
+    /*
+    |--------------------------------------------------------------------------
+    | Cache This Relations When User Has Authenticated
+    |--------------------------------------------------------------------------
+    |
+    | You can add this array to your own relations, anything you want to store
+    | in Redis. We recommend caching only roles and permissions here as much as
+    | possible.
+    |
+    */
+    'cache_relations' => [
         'roles.permissions',
         'permissions'
     ],
 ```
-You can customize error code,message,title for your application.
+* Customize Exceptions
 ```php
- 'errors' => [
-        'TokenNotProvidedException' => [
-            'title' => 'Your custom title',
-            'message' => 'Your custom error message.',
-            'code' => 99999
-        ]
-]
+    /*
+    |--------------------------------------------------------------------------
+    | Customize All Exception Messages and Codes
+    |--------------------------------------------------------------------------
+    |
+    | You can customize error code,message,title for your application.
+    |
+    */
+    'errors' => [
+       'TokenNotProvidedException' => [
+           'title' => 'Your custom title',
+           'message' => 'Your custom error message.',
+           'code' => 99999
+       ]
+    ]
 ```
 
 ## Example Project
 
 Here is an [example](https://github.com/sametsahindogan/laravel-jwtredis-example) using laravel-jwtredis. You can examine in detail.
 
-## Performance Improvement Tips
+## Performance Improvements Tips
 This package requirement the predis package by default.
 
 You may install the PhpRedis PHP extension via PECL. The extension is more complex to install but may yield better performance for applications that make heavy use of Redis. Predis is the alternative for PhpRedis on pure PHP and does not require any additional C extension by default.
