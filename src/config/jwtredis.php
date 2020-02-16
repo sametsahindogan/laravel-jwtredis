@@ -1,73 +1,132 @@
 <?php
 
 return [
-
-    /**
-     * This observer class, listening event on your user model.
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | JWTRedis User Model Observer
+    |--------------------------------------------------------------------------
+    |
+    | This observer class, listening all events on your user model. Is triggered
+    | when you assign roles & permissions to user, or update and delete to
+    | your user model.
+    |
+    */
     'observer' => \Sametsahindogan\JWTRedis\Observers\UserRedisObserver::class,
 
-    /**
-     *
-     * If observer async option is true, model's events are processed in the queue.
-     * ! Don't forget to run Laravel Queue Worker.
-     */
-    'observer_events_queue' => false,
+    /*
+    |--------------------------------------------------------------------------
+    | Observer Events Are Queued
+    |--------------------------------------------------------------------------
+    |
+    | If this option is true, model's events are processed as a job on queue.
+    |
+    | * ~ Don't forget to run Queue Worker if this option is true. ~ *
+    |
+    */
+    'observer_events_queue' => true,
 
-    /**
-     *
-     * This is your user model.
-     */
-    'user_model' =>  \App\User::class,
+    /*
+    |--------------------------------------------------------------------------
+    | Your User Model
+    |--------------------------------------------------------------------------
+    |
+    | You can set specific user model.
+    |
+    */
+    'user_model' => \App\Models\User::class,
 
-    /**
-     *
-     * If it's option is true, user stored in Redis up to jwt_ttl value time.
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Store on Redis up to jwt_ttl value.
+    |--------------------------------------------------------------------------
+    |
+    | If it's option is true, user stored in Redis up to jwt_ttl value time.
+    |
+    */
     'redis_ttl_jwt' => true,
 
-    /**
-     *
-     * User stored in Redis redis_ttl value time.
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Store on Redis up to specific time
+    |--------------------------------------------------------------------------
+    |
+    |  User stored in Redis redis_ttl value time.
+    |
+    */
     'redis_ttl' => 60,
 
-    /**
-     *
-     * If it's user id is 1, this user stored in Redis auth_1.
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Cache Prefix
+    |--------------------------------------------------------------------------
+    |
+    | If it's user id is 1, this user stored in Redis as auth_1.
+    |
+    */
     'redis_auth_prefix' => 'auth_',
 
-     /**
-      *
-      * If check banned user option is true, every necessary middleware check if user banned.
-      */
-    'check_banned_user' => false,
+    /*
+    |--------------------------------------------------------------------------
+    | Banned User Checking
+    |--------------------------------------------------------------------------
+    |
+    | If the check_banned_user option is true, that users cannot access
+    | the your application.
+    |
+    */
+    'check_banned_user' => true,
 
-    /**
-     *
-     * Status column name.
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Status Column For Banned User Checking
+    |--------------------------------------------------------------------------
+    |
+    | You can set your specific column name of your user model.
+    |
+    */
     'status_column_title' => 'status',
 
-    /**
-     *
-     * Return 'user is banned' response for this user statuses.
-     */
-    'banned_statuses' => ['banned', 'deactivate'],
+    /*
+    |--------------------------------------------------------------------------
+    | Restricted statuses For Banned User Checking
+    |--------------------------------------------------------------------------
+    |
+    | If the user has one of these statuses and trying to reach your application,
+    | JWTRedis throws AccountBlockedException.
+    | You can set the message (check it errors array) that will return in this
+    | exception.
+    |
+    */
+    'banned_statuses' => [
+        'banned',
+        'deactivate'
+    ],
 
-    /**
-     * You can add this array to your own relations, anything you want to store in Redis.
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Cache This Relations When User Has Authenticated
+    |--------------------------------------------------------------------------
+    |
+    | You can add this array to your own relations, anything you want to store
+    | in Redis. We recommend caching only roles and permissions here as much as
+    | possible.
+    |
+    */
     'cache_relations' => [
         'roles.permissions',
         'permissions'
     ],
 
-    /**
-     * You can customize error code,message,title for your application.
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | Customize All Exception Messages and Codes
+    |--------------------------------------------------------------------------
+    |
+    | You can customize error code,message,title for your application.
+    |
+    */
     'errors' => [
+
         'default' => [
             'title' => 'Operation Failed',
             'message' => 'An error occurred.',
