@@ -147,11 +147,11 @@ You can customize some options in that package. Check `config/jwtredis.php` file
     */
     'observer_events_queue' => true,
 ```
-* Storing Time
+* Cache Time
 ```php
-/*
+    /*
     |--------------------------------------------------------------------------
-    | Store on Redis up to jwt_ttl value.
+    | Cache on Redis up to jwt_ttl value.
     |--------------------------------------------------------------------------
     |
     | If it's option is true, user stored in Redis up to jwt_ttl value time.
@@ -161,7 +161,7 @@ You can customize some options in that package. Check `config/jwtredis.php` file
 
     /*
     |--------------------------------------------------------------------------
-    | Store on Redis up to specific time
+    | Cache on Redis up to specific time
     |--------------------------------------------------------------------------
     |
     | If you don't want to store user in Redis until JWT expire time, 
