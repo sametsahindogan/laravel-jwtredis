@@ -222,7 +222,7 @@ You can customize some options in that package. Check `config/jwtredis.php` file
         'deactivate'
     ],
 ```
-Relation Caching
+* Relation Caching
 ```php
     /*
     |--------------------------------------------------------------------------
