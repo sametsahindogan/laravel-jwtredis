@@ -33,7 +33,7 @@ return [
     | You can set specific user model.
     |
     */
-    'user_model' => \App\Models\User::class,
+    'user_model' => \App\User::class,
 
     /*
     |--------------------------------------------------------------------------

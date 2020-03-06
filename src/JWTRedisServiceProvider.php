@@ -72,6 +72,8 @@ class JWTRedisServiceProvider extends ServiceProvider
 
     protected function bindObservers()
     {
-        config('jwtredis.user_model')::observe(config('jwtredis.observer'));
+        if(class_exists(config('jwtredis.user_model'))){
+            config('jwtredis.user_model')::observe(config('jwtredis.observer'));
+        }
     }
 }
