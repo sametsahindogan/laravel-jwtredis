@@ -23,7 +23,7 @@ return [
     | * ~ Don't forget to run Queue Worker if this option is true. ~ *
     |
     */
-    'observer_events_queue' => true,
+    'observer_events_queue' => false,
 
     /*
     |--------------------------------------------------------------------------
