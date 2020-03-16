@@ -21,6 +21,8 @@ class UserRedisObserver
         if (config('jwtredis.observer_events_queue')) {
             dispatch((new ProcessObserver($model, __FUNCTION__)));
         } else {
+            // Refresh user..
+            $model = config('jwtredis.user_model')::find($model->id);
             return RedisCache::key($model->getRedisKey())
                 ->data($model->load(config('jwtredis.cache_relations')))
                 ->refreshCache();

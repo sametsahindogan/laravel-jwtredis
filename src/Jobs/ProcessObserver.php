@@ -60,6 +60,9 @@ class ProcessObserver implements ShouldQueue
      */
     protected function updated()
     {
+        // Refresh user..
+        $this->model = config('jwtredis.user_model')::find($this->model->id);
+
         return RedisCache::key($this->model->getRedisKey())
             ->data($this->model->load(config('jwtredis.cache_relations')))
             ->refreshCache();
