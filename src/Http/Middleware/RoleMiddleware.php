@@ -14,14 +14,16 @@ class RoleMiddleware extends BaseMiddleware
      * @param $request
      * @param Closure $next
      * @param $role
-     * @return mixed
+     *
      * @throws AuthorizationException
+     *
+     * @return mixed
      */
     public function handle($request, Closure $next, $role)
     {
         try {
             $this->setIfClaimIsNotExist($request);
-        } catch (TokenExpiredException|TokenInvalidException|JWTException $e) {
+        } catch (TokenExpiredException | TokenInvalidException | JWTException $e) {
             return $this->getErrorResponse($e);
         }
 
@@ -29,7 +31,7 @@ class RoleMiddleware extends BaseMiddleware
 
         $roles = is_array($role) ? $role : explode('|', $role);
 
-        if(config('jwtredis.check_banned_user')){
+        if (config('jwtredis.check_banned_user')) {
             if (!$request->authedUser->checkUserStatus()) {
                 return $this->getErrorResponse('AccountBlockedException');
             }
@@ -41,5 +43,4 @@ class RoleMiddleware extends BaseMiddleware
 
         return $next($request);
     }
-
 }

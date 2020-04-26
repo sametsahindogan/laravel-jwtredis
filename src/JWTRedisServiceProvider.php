@@ -2,11 +2,11 @@
 
 namespace Sametsahindogan\JWTRedis;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Sametsahindogan\JWTRedis\Cache\RedisCache;
 use Sametsahindogan\JWTRedis\Contracts\RedisCacheContract;
 use Sametsahindogan\JWTRedis\Guards\JWTRedisGuard;
-use Illuminate\Support\Facades\Auth;
 use Sametsahindogan\JWTRedis\Providers\JWTRedisUserProvider;
 
 class JWTRedisServiceProvider extends ServiceProvider
@@ -34,12 +34,11 @@ class JWTRedisServiceProvider extends ServiceProvider
         $this->bindObservers();
     }
 
-
     protected function publishConfig()
     {
-        $this->mergeConfigFrom(__DIR__ . '/config/jwtredis.php', 'jwtredis');
+        $this->mergeConfigFrom(__DIR__.'/config/jwtredis.php', 'jwtredis');
 
-        $this->publishes([__DIR__ . '/config/jwtredis.php' => config_path('jwtredis.php')], 'config');
+        $this->publishes([__DIR__.'/config/jwtredis.php' => config_path('jwtredis.php')], 'config');
     }
 
     protected function overrideJWTGuard()
@@ -73,7 +72,7 @@ class JWTRedisServiceProvider extends ServiceProvider
 
     protected function bindObservers()
     {
-        if(class_exists(config('jwtredis.user_model'))){
+        if (class_exists(config('jwtredis.user_model'))) {
             config('jwtredis.user_model')::observe(config('jwtredis.observer'));
         }
     }

@@ -14,7 +14,6 @@ use Tymon\JWTAuth\Token;
 
 class Refreshable extends BaseMiddleware
 {
-
     /**
      * The JWT Authenticator.
      *
@@ -23,12 +22,11 @@ class Refreshable extends BaseMiddleware
     protected $auth;
 
     /**
-     * @var Manager $manager
+     * @var Manager
      */
     protected $manager;
 
     /**
-     *
      * @param \Tymon\JWTAuth\JWTAuth $auth
      *
      * @return void
@@ -43,27 +41,23 @@ class Refreshable extends BaseMiddleware
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
+     * @param \Closure                 $next
      *
-     * @return mixed
      * @throws \Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException
      *
+     * @return mixed
      */
     public function handle($request, Closure $next)
     {
         $this->checkForToken($request);
 
         try {
-
             $token = $this->auth->parseToken()->refresh();
 
             /** Application need this assignment for using Laravel's Auth facade. */
             $request->claim = $this->manager->decode(new Token($token))->get('sub');
-
-        } catch (TokenInvalidException|JWTException $e) {
-
+        } catch (TokenInvalidException | JWTException $e) {
             return $this->getErrorResponse($e);
-
         }
 
         // Send the refreshed token back to the client.
@@ -102,4 +96,3 @@ class Refreshable extends BaseMiddleware
         return response()->json(new SuccessResult(['token' => $token]));
     }
 }
-

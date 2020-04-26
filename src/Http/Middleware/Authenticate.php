@@ -16,21 +16,17 @@ class Authenticate extends BaseMiddleware
      *
      * @param $request
      * @param Closure $next
+     *
      * @return JsonResponse
      */
     public function handle($request, Closure $next)
     {
         try {
-
             $this->setIfClaimIsNotExist($request);
-
-        } catch (TokenExpiredException|TokenInvalidException|JWTException|TokenBlacklistedException $e) {
-
+        } catch (TokenExpiredException | TokenInvalidException | JWTException | TokenBlacklistedException $e) {
             return $this->getErrorResponse($e);
-
         }
 
         return $next($request);
     }
-
 }

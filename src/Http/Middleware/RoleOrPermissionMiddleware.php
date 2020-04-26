@@ -15,13 +15,14 @@ class RoleOrPermissionMiddleware extends BaseMiddleware
      * @param $request
      * @param Closure $next
      * @param $roleOrPermission
+     *
      * @return \Illuminate\Http\JsonResponse|mixed
      */
     public function handle($request, Closure $next, $roleOrPermission)
     {
         try {
             $this->setIfClaimIsNotExist($request);
-        } catch (TokenExpiredException|TokenInvalidException|JWTException $e) {
+        } catch (TokenExpiredException | TokenInvalidException | JWTException $e) {
             return $this->getErrorResponse($e);
         }
 

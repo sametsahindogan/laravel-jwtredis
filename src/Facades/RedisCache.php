@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Facade;
 use Sametsahindogan\JWTRedis\Contracts\RedisCacheContract;
 
 /**
- * Class RedisCache
- * @package Sametsahindogan\JWTRedis\Facades
+ * Class RedisCache.
  */
 class RedisCache extends Facade
 {

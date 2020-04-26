@@ -7,13 +7,13 @@ use Sametsahindogan\JWTRedis\Facades\RedisCache;
 use Sametsahindogan\JWTRedis\Jobs\ProcessObserver;
 
 /**
- * Class UserRedisObserver
- * @package Sametsahindogan\JWTRedis\Observers
+ * Class UserRedisObserver.
  */
 class UserRedisObserver
 {
     /**
      * Handle the Model "updated" event.
+     *
      * @return void
      */
     public function updated(Model $model)
@@ -23,6 +23,7 @@ class UserRedisObserver
         } else {
             // Refresh user..
             $model = config('jwtredis.user_model')::find($model->id);
+
             return RedisCache::key($model->getRedisKey())
                 ->data($model->load(config('jwtredis.cache_relations')))
                 ->refreshCache();
@@ -31,6 +32,7 @@ class UserRedisObserver
 
     /**
      * Handle the Model "deleted" event.
+     *
      * @return void
      */
     public function deleted(Model $model)

@@ -7,32 +7,36 @@ use Sametsahindogan\JWTRedis\Contracts\RedisCacheContract;
 
 class RedisCache implements RedisCacheContract
 {
-    /** @var mixed $data */
+    /** @var mixed */
     protected $data;
 
-    /** @var int $time */
+    /** @var int */
     private $time;
 
-    /** @var string $key */
+    /** @var string */
     protected $key;
 
     /**
      * @param string $key
+     *
      * @return RedisCacheContract
      */
     public function key(string $key): RedisCacheContract
     {
         $this->key = $key;
+
         return $this;
     }
 
     /**
      * @param $data
+     *
      * @return RedisCacheContract
      */
     public function data($data): RedisCacheContract
     {
         $this->data = $data;
+
         return $this;
     }
 
@@ -57,7 +61,9 @@ class RedisCache implements RedisCacheContract
      */
     public function refreshCache()
     {
-        if (!$this->getCache()) return false;
+        if (!$this->getCache()) {
+            return false;
+        }
 
         $this->key($this->key)->removeCache();
 
@@ -82,6 +88,7 @@ class RedisCache implements RedisCacheContract
     private function setTime(): RedisCacheContract
     {
         $this->time = (config('jwtredis.redis_ttl_jwt') ? config('jwt.ttl') : config('jwtredis.redis_ttl')) * 60;
+
         return $this;
     }
 }

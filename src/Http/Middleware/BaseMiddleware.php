@@ -17,6 +17,7 @@ abstract class BaseMiddleware
      *  using Laravel's Auth facade.
      *
      * @param $request
+     *
      * @return bool
      */
     protected function setIfClaimIsNotExist($request)
@@ -45,6 +46,7 @@ abstract class BaseMiddleware
 
     /**
      * @param $exception
+     *
      * @return JsonResponse
      */
     protected function getErrorResponse($exception)
