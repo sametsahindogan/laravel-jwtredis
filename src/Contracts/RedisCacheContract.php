@@ -2,19 +2,23 @@
 
 namespace Sametsahindogan\JWTRedis\Contracts;
 
+/**
+ * Interface RedisCacheContract
+ * @package Sametsahindogan\JWTRedis\Contracts
+ */
 interface RedisCacheContract
 {
     /**
      * @param string $key
-     * @return $this
+     * @return RedisCacheContract
      */
-    public function key(string $key);
+    public function key(string $key): RedisCacheContract;
 
     /**
      * @param $data
-     * @return mixed
+     * @return RedisCacheContract
      */
-    public function data($data);
+    public function data($data): RedisCacheContract;
 
     /**
      * @return mixed

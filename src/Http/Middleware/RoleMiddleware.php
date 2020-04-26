@@ -4,8 +4,6 @@ namespace Sametsahindogan\JWTRedis\Http\Middleware;
 
 use Closure;
 use Illuminate\Auth\Access\AuthorizationException;
-use Sametsahindogan\ResponseObjectCreator\ErrorResult;
-use Sametsahindogan\ResponseObjectCreator\ErrorService\ErrorBuilder;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;

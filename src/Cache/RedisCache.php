@@ -17,9 +17,10 @@ class RedisCache implements RedisCacheContract
     protected $key;
 
     /**
-     * @param $time
+     * @param string $key
+     * @return RedisCacheContract
      */
-    public function key(string $key)
+    public function key(string $key): RedisCacheContract
     {
         $this->key = $key;
         return $this;
@@ -27,9 +28,9 @@ class RedisCache implements RedisCacheContract
 
     /**
      * @param $data
-     * @return $this|RedisCacheContract
+     * @return RedisCacheContract
      */
-    public function data($data)
+    public function data($data): RedisCacheContract
     {
         $this->data = $data;
         return $this;
@@ -52,9 +53,7 @@ class RedisCache implements RedisCacheContract
     }
 
     /**
-     * @param $oldKey
-     * @param $newKey
-     * @return mixed
+     * @return bool|mixed
      */
     public function refreshCache()
     {
@@ -78,12 +77,11 @@ class RedisCache implements RedisCacheContract
     }
 
     /**
-     * Calculate * 60 for converting hour.
-     * @param $time
+     * @return $this
      */
-    private function setTime()
+    private function setTime(): RedisCacheContract
     {
-        $this->time = ( config('jwtredis.redis_ttl_jwt') ? config('jwt.ttl') : config('jwtredis.redis_ttl') ) * 60;
+        $this->time = (config('jwtredis.redis_ttl_jwt') ? config('jwt.ttl') : config('jwtredis.redis_ttl')) * 60;
         return $this;
     }
 }

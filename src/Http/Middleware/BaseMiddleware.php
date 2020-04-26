@@ -2,6 +2,7 @@
 
 namespace Sametsahindogan\JWTRedis\Http\Middleware;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Sametsahindogan\ResponseObjectCreator\ErrorResult;
 use Sametsahindogan\ResponseObjectCreator\ErrorService\ErrorBuilder;
@@ -16,6 +17,7 @@ abstract class BaseMiddleware
      *  using Laravel's Auth facade.
      *
      * @param $request
+     * @return bool
      */
     protected function setIfClaimIsNotExist($request)
     {
@@ -43,7 +45,7 @@ abstract class BaseMiddleware
 
     /**
      * @param $exception
-     * @return \Illuminate\Config\Repository|mixed
+     * @return JsonResponse
      */
     protected function getErrorResponse($exception)
     {

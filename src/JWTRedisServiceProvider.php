@@ -34,6 +34,7 @@ class JWTRedisServiceProvider extends ServiceProvider
         $this->bindObservers();
     }
 
+
     protected function publishConfig()
     {
         $this->mergeConfigFrom(__DIR__ . '/config/jwtredis.php', 'jwtredis');

@@ -144,6 +144,10 @@ class JWTRedisGuard extends JWTGuard implements Guard
         return null;
     }
 
+    /**
+     * @param bool $login
+     * @return mixed
+     */
     public function storeRedis($login = false)
     {
         // If is Login value true, user cached from lastAttempt object.

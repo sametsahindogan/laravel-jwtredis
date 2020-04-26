@@ -3,6 +3,7 @@
 namespace Sametsahindogan\JWTRedis\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\JsonResponse;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
@@ -13,9 +14,9 @@ class Authenticate extends BaseMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     * @return mixed
+     * @param $request
+     * @param Closure $next
+     * @return JsonResponse
      */
     public function handle($request, Closure $next)
     {
