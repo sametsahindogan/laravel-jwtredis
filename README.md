@@ -1,6 +1,7 @@
 # laravel-jwtredis
 
 [![](https://img.shields.io/packagist/v/sametsahindogan/laravel-jwtredis)](https://packagist.org/packages/sametsahindogan/laravel-jwtredis)
+[![](https://github.styleci.io/repos/234304505/shield?branch=master)](https://github.styleci.io/repos/234304505)
 [![](https://img.shields.io/packagist/l/sametsahindogan/laravel-jwtredis)](https://raw.githubusercontent.com/sametsahindogan/laravel-jwtredis/master/LICENSE)
 [![](https://img.shields.io/packagist/dt/sametsahindogan/laravel-jwtredis?color=success)](https://packagist.org/packages/sametsahindogan/laravel-jwtredis)
 
