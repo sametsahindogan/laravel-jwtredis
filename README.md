@@ -1,6 +1,8 @@
 # laravel-jwtredis
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://raw.githubusercontent.com/sametsahindogan/laravel-jwtredis/master/LICENSE)
+[![](https://img.shields.io/packagist/v/sametsahindogan/laravel-jwtredis)](https://packagist.org/packages/sametsahindogan/laravel-jwtredis)
+[![](https://img.shields.io/packagist/l/sametsahindogan/laravel-jwtredis)](https://raw.githubusercontent.com/sametsahindogan/laravel-jwtredis/master/LICENSE)
+[![](https://img.shields.io/packagist/dt/sametsahindogan/laravel-jwtredis?color=success)](https://packagist.org/packages/sametsahindogan/laravel-jwtredis)
 
 > This package allows JWT-authenticated users to be stored and management in Redis with
 their roles, permissions, statuses and anything you want.
