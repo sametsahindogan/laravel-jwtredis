@@ -18,6 +18,7 @@ trait JWTRedisHasRoles
      * !Important; Triggering the observer.
      *
      * @param mixed ...$roles
+     *
      * @return $this
      */
     public function assignRole(...$roles)
@@ -35,6 +36,7 @@ trait JWTRedisHasRoles
      * !Important; Made only one changes this method for triggering observer.
      *
      * @param mixed ...$permissions
+     *
      * @return $this
      */
     public function givePermissionTo(...$permissions)
@@ -89,13 +91,17 @@ trait JWTRedisHasRoles
 
         if (is_string($permission)) {
             foreach ($roles as $role) {
-                if ($role->permissions->contains('name', $permission)) return true;
+                if ($role->permissions->contains('name', $permission)) {
+                    return true;
+                }
             }
         }
 
         if (is_int($permission)) {
             foreach ($roles as $role) {
-                if ($role->permissions->contains('id', $permission)) return true;
+                if ($role->permissions->contains('id', $permission)) {
+                    return true;
+                }
             }
         }
 
@@ -120,11 +126,12 @@ trait JWTRedisHasRoles
      */
     public function getRedisKey()
     {
-        return config('jwtredis.redis_auth_prefix') . $this->getJWTIdentifier();
+        return config('jwtredis.redis_auth_prefix').$this->getJWTIdentifier();
     }
 
     /**
      * @param $role
+     *
      * @return bool
      */
     public function triggerTheObserver()
@@ -134,6 +141,6 @@ trait JWTRedisHasRoles
 
         $class = config('jwtredis.observer');
 
-        (new $class)->updated($model);
+        (new $class())->updated($model);
     }
 }

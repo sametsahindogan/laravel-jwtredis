@@ -10,19 +10,19 @@ use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 class PermissionMiddleware extends BaseMiddleware
 {
     /**
-     *
      * Handle an incoming request.
      *
      * @param $request
      * @param Closure $next
      * @param $permission
+     *
      * @return \Illuminate\Http\JsonResponse|mixed
      */
     public function handle($request, Closure $next, $permission)
     {
         try {
             $this->setIfClaimIsNotExist($request);
-        } catch (TokenExpiredException|TokenInvalidException|JWTException $e) {
+        } catch (TokenExpiredException | TokenInvalidException | JWTException $e) {
             return $this->getErrorResponse($e);
         }
 

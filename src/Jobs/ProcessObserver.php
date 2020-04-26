@@ -3,30 +3,33 @@
 namespace Sametsahindogan\JWTRedis\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Sametsahindogan\JWTRedis\Facades\RedisCache;
 
 /**
- * Class ProcessObserver
- * @package Sametsahindogan\JWTRedis\Jobs
+ * Class ProcessObserver.
  */
 class ProcessObserver implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
-    /** @var Model $model */
+    /** @var Model */
     private $model;
 
-    /** @var string $process */
+    /** @var string */
     private $process;
 
     /**
      * ProcessObserver constructor.
-     * @param Model $model
+     *
+     * @param Model  $model
      * @param string $process
      */
     public function __construct(Model $model, string $process)

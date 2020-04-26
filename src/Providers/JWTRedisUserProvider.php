@@ -17,6 +17,7 @@ class JWTRedisUserProvider extends EloquentUserProvider implements UserProviderC
      * !Important; I made some changes this method for eager loading user roles&permissions.
      *
      * @param array $credentials
+     *
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function retrieveByCredentials(array $credentials)
@@ -26,7 +27,6 @@ class JWTRedisUserProvider extends EloquentUserProvider implements UserProviderC
                 array_key_exists('password', $credentials))) {
             return;
         }
-
 
         // First we will add each credential element to the query as a where clause.
         // Then we can execute the query and, if we found a user, return it in a

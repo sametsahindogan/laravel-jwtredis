@@ -2,9 +2,9 @@
 
 namespace Sametsahindogan\JWTRedis\Guards;
 
-use Sametsahindogan\JWTRedis\Facades\RedisCache;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Auth\Guard;
+use Sametsahindogan\JWTRedis\Facades\RedisCache;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\JWTGuard;
 
@@ -14,9 +14,6 @@ class JWTRedisGuard extends JWTGuard implements Guard
      * @OVERRIDE!
      *
      * Log a user into the application using their credentials.
-     *
-     *
-     * !Important; Made some changes this method for set authed user to redis.
      *
      * @param array $credentials
      *
@@ -57,16 +54,17 @@ class JWTRedisGuard extends JWTGuard implements Guard
      * !Important; Made some changes this method for banned user can't get token.
      *
      * @param array $credentials
-     * @param bool $login
-     * @return bool|string
+     * @param bool  $login
+     *
      * @throws AuthorizationException
+     *
+     * @return bool|string
      */
     public function attempt(array $credentials = [], $login = true)
     {
         $this->lastAttempted = $user = $this->provider->retrieveByCredentials($credentials);
 
         if ($this->hasValidCredentials($user, $credentials)) {
-
             if (config('jwtredis.check_banned_user')) {
                 if (!$user->checkUserStatus()) {
                     throw new AuthorizationException('Your account has been blocked by the administrator.');
@@ -126,7 +124,7 @@ class JWTRedisGuard extends JWTGuard implements Guard
      */
     public function getRedisKeyFromClaim()
     {
-        return 'auth_' . $this->request->claim;
+        return 'auth_'.$this->request->claim;
     }
 
     /**
@@ -135,7 +133,6 @@ class JWTRedisGuard extends JWTGuard implements Guard
     public function setAuthToRedis()
     {
         if ($this->request->bearerToken()) {
-
             return $this->storeRedis();
         }
 
@@ -146,6 +143,7 @@ class JWTRedisGuard extends JWTGuard implements Guard
 
     /**
      * @param bool $login
+     *
      * @return mixed
      */
     public function storeRedis($login = false)
