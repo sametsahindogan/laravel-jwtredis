@@ -74,7 +74,7 @@ return [
     | the your application.
     |
     */
-    'check_banned_user' => true,
+    'check_banned_user' => false,
 
     /*
     |--------------------------------------------------------------------------
