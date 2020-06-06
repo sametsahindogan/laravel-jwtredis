@@ -36,14 +36,14 @@ class JWTRedisServiceProvider extends ServiceProvider
 
     protected function publishConfig()
     {
-        $this->mergeConfigFrom(__DIR__.'/config/jwtredis.php', 'jwtredis');
+        $this->mergeConfigFrom(__DIR__ . '/config/jwtredis.php', 'jwtredis');
 
-        $this->publishes([__DIR__.'/config/jwtredis.php' => config_path('jwtredis.php')], 'config');
+        $this->publishes([__DIR__ . '/config/jwtredis.php' => config_path('jwtredis.php')], 'config');
     }
 
     protected function overrideJWTGuard()
     {
-        // Override JWT Guard for without DB query..
+        // Override JWT Guard for laravel-jwtredis..
         Auth::extend('jwt_redis_guard', function ($app, $name, array $config) {
 
             // Return an instance of Illuminate\Contracts\Auth\Guard...
