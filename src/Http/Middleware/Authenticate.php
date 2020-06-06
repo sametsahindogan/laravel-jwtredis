@@ -28,7 +28,6 @@ class Authenticate extends BaseMiddleware
         }
 
         if (config('jwtredis.check_banned_user')) {
-
             $this->setAuthedUser($request);
 
             if (!$request->authedUser->checkUserStatus()) {

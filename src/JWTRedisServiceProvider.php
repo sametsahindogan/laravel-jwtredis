@@ -36,9 +36,9 @@ class JWTRedisServiceProvider extends ServiceProvider
 
     protected function publishConfig()
     {
-        $this->mergeConfigFrom(__DIR__ . '/config/jwtredis.php', 'jwtredis');
+        $this->mergeConfigFrom(__DIR__.'/config/jwtredis.php', 'jwtredis');
 
-        $this->publishes([__DIR__ . '/config/jwtredis.php' => config_path('jwtredis.php')], 'config');
+        $this->publishes([__DIR__.'/config/jwtredis.php' => config_path('jwtredis.php')], 'config');
     }
 
     protected function overrideJWTGuard()
