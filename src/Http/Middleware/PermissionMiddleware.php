@@ -30,6 +30,12 @@ class PermissionMiddleware extends BaseMiddleware
 
         $permissions = is_array($permission) ? $permission : explode('|', $permission);
 
+        if (config('jwtredis.check_banned_user')) {
+            if (!$request->authedUser->checkUserStatus()) {
+                return $this->getErrorResponse('AccountBlockedException');
+            }
+        }
+
         foreach ($permissions as $permission) {
             if ($request->authedUser->can($permission)) {
                 return $next($request);

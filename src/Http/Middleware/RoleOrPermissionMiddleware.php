@@ -30,6 +30,12 @@ class RoleOrPermissionMiddleware extends BaseMiddleware
 
         $rolesOrPermissions = is_array($roleOrPermission) ? $roleOrPermission : explode('|', $roleOrPermission);
 
+        if (config('jwtredis.check_banned_user')) {
+            if (!$request->authedUser->checkUserStatus()) {
+                return $this->getErrorResponse('AccountBlockedException');
+            }
+        }
+
         if (!$request->authedUser->hasAnyRole($rolesOrPermissions) && !$request->authedUser->hasAnyPermission($rolesOrPermissions)) {
             return $this->getErrorResponse('RoleOrPermissionException');
         }

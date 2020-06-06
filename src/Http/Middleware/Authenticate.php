@@ -27,6 +27,15 @@ class Authenticate extends BaseMiddleware
             return $this->getErrorResponse($e);
         }
 
+        if (config('jwtredis.check_banned_user')) {
+
+            $this->setAuthedUser($request);
+
+            if (!$request->authedUser->checkUserStatus()) {
+                return $this->getErrorResponse('AccountBlockedException');
+            }
+        }
+
         return $next($request);
     }
 }
