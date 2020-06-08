@@ -43,6 +43,7 @@ class Refreshable extends BaseMiddleware
      *
      * @param $request
      * @param Closure $next
+     *
      * @return JsonResponse|Response
      */
     public function handle($request, Closure $next)
@@ -69,6 +70,7 @@ class Refreshable extends BaseMiddleware
      * Check the request for the presence of a token.
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     protected function checkForToken(Request $request)
