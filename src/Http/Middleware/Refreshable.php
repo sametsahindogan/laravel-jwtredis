@@ -7,7 +7,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Sametsahindogan\ResponseObjectCreator\SuccessResult;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\JWTAuth;
@@ -42,12 +41,9 @@ class Refreshable extends BaseMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param \Closure $next
-     *
-     * @return mixed
-     * @throws UnauthorizedHttpException
-     *
+     * @param $request
+     * @param Closure $next
+     * @return JsonResponse|Response
      */
     public function handle($request, Closure $next)
     {
