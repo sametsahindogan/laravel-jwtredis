@@ -3,9 +3,11 @@
 namespace Sametsahindogan\JWTRedis\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 use Sametsahindogan\ResponseObjectCreator\SuccessResult;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\JWTAuth;
@@ -17,7 +19,7 @@ class Refreshable extends BaseMiddleware
     /**
      * The JWT Authenticator.
      *
-     * @var \Tymon\JWTAuth\JWTAuth
+     * @var JWTAuth
      */
     protected $auth;
 
@@ -27,7 +29,7 @@ class Refreshable extends BaseMiddleware
     protected $manager;
 
     /**
-     * @param \Tymon\JWTAuth\JWTAuth $auth
+     * @param JWTAuth $auth
      *
      * @return void
      */
@@ -40,15 +42,16 @@ class Refreshable extends BaseMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException
+     * @param Request $request
+     * @param \Closure $next
      *
      * @return mixed
+     * @throws UnauthorizedHttpException
+     *
      */
     public function handle($request, Closure $next)
     {
+
         $this->checkForToken($request);
 
         try {
@@ -56,9 +59,11 @@ class Refreshable extends BaseMiddleware
 
             /** Application need this assignment for using Laravel's Auth facade. */
             $request->claim = $this->manager->decode(new Token($token))->get('sub');
+
         } catch (TokenInvalidException | JWTException $e) {
             return $this->getErrorResponse($e);
         }
+
 
         // Send the refreshed token back to the client.
         return $this->setAuthenticationResponse($token);
@@ -67,9 +72,8 @@ class Refreshable extends BaseMiddleware
     /**
      * Check the request for the presence of a token.
      *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return void
+     * @param Request $request
+     * @return JsonResponse
      */
     protected function checkForToken(Request $request)
     {
@@ -81,16 +85,10 @@ class Refreshable extends BaseMiddleware
     /**
      * Set the token response.
      *
-     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     * @return Response|JsonResponse
      */
     protected function setAuthenticationResponse($token = null)
     {
-        if (config('jwtredis.check_banned_user')) {
-            if (!Auth::user()->checkUserStatus()) {
-                return $this->getErrorResponse('AccountBlockedException');
-            }
-        }
-
         $token = $token ?: $this->auth->refresh();
 
         return response()->json(new SuccessResult(['token' => $token]));
