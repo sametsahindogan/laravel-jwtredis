@@ -48,7 +48,6 @@ class Refreshable extends BaseMiddleware
      */
     public function handle($request, Closure $next)
     {
-
         $this->checkForToken($request);
 
         try {
@@ -56,11 +55,9 @@ class Refreshable extends BaseMiddleware
 
             /** Application need this assignment for using Laravel's Auth facade. */
             $request->claim = $this->manager->decode(new Token($token))->get('sub');
-
         } catch (TokenInvalidException | JWTException $e) {
             return $this->getErrorResponse($e);
         }
-
 
         // Send the refreshed token back to the client.
         return $this->setAuthenticationResponse($token);
