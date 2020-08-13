@@ -83,7 +83,9 @@ class RedisCache implements RedisCacheContract
     {
         $this->setTime();
 
-        return Redis::setex($this->key, $this->time, $this->serialize($this->data));
+        Redis::setex($this->key, $this->time, $this->serialize($this->data));
+
+        return $this->data;
     }
 
     /**
