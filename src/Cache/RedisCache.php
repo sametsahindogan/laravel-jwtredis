@@ -98,6 +98,7 @@ class RedisCache implements RedisCacheContract
 
     /**
      * @param $value
+     *
      * @return int|string
      */
     protected function serialize($value)
@@ -110,9 +111,8 @@ class RedisCache implements RedisCacheContract
     }
 
     /**
-     * Unserialize the value.
-     *
      * @param mixed $value
+     *
      * @return mixed
      */
     protected function unserialize($value)
