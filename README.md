@@ -9,7 +9,7 @@
 their roles, permissions, statuses and anything you want.
 
 <a><img src="https://cdn.auth0.com/blog/jwtalgos/logo.png" width="80"></a>
-<a><img src="https://chris.lu/upload/images/redis.png" width="80"></a>
+<a><img src="https://cdn4.iconfinder.com/data/icons/redis-2/1451/Untitled-2-512.png" width="80"></a>
 
 >Also this package have an observer for listening and updating  to your user model 
 on Redis. This observer is triggered `when you assign roles & permissions to user, or update
