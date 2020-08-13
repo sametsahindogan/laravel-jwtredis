@@ -15,10 +15,7 @@ use Sametsahindogan\JWTRedis\Facades\RedisCache;
  */
 class ProcessObserver implements ShouldQueue
 {
-    use Dispatchable;
-    use InteractsWithQueue;
-    use Queueable;
-    use SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /** @var Model */
     private $model;
@@ -29,7 +26,7 @@ class ProcessObserver implements ShouldQueue
     /**
      * ProcessObserver constructor.
      *
-     * @param Model  $model
+     * @param Model $model
      * @param string $process
      */
     public function __construct(Model $model, string $process)

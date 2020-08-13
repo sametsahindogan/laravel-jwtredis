@@ -84,13 +84,13 @@ class JWTRedisGuard extends JWTGuard implements Guard
      */
     public function retreiveByRedis()
     {
-        return $this->request->authedUser ?? $this->getOrSetRedis();
+        return $this->request->authedUser ?? $this->getOrSetToRedis();
     }
 
     /**
      * @return mixed
      */
-    public function getOrSetRedis()
+    public function getOrSetToRedis()
     {
         return $this->getAuthFromRedis() ?? $this->setAuthToRedis();
     }
