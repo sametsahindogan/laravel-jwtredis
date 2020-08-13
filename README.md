@@ -48,7 +48,7 @@ Next, you will need to change the `guards` and `providers` arrays in your `confi
 'providers' => [
         'users' => [
             'driver' => 'jwt_redis_user_provider',
-            'model' =>  App\User::class, /* Your User Model */
+            'model' =>  App\User::class, // Your User Model
         ],
     ],
 ```
@@ -185,6 +185,21 @@ You can customize some options in that package. Check `config/jwtredis.php` file
     */
     'redis_auth_prefix' => 'auth_',
 ```
+* Serialization
+```php
+    /*
+   |--------------------------------------------------------------------------
+   | Igbinary Serialization
+   |--------------------------------------------------------------------------
+   |
+   | Igbinary Serialization provides a better performance and lower memory 
+   | usage than PHP Serialization.
+   |
+   | * ~ Don't forget to enable igbinary extension if this option is true. ~ *
+   |
+   */
+    'igbinary_serialization' => false,
+```
 * Banned User Check
 ```php
     /*
@@ -272,7 +287,7 @@ You may install the PhpRedis PHP extension via PECL. The extension is more compl
 
 "PhpRedis is faster about x6 times. Using igbinary serializer reduces stored data size about 3x times. If Redis installed on separate machines, reducing network traffic is a very significant speedup."
 
-In my opinion, using [PhpRedis](https://github.com/phpredis/phpredis) and serializer as igbinary ([Lodash](https://github.com/akalongman/laravel-lodash) package it provide this for Laravel.) in production environment gives a great performance.
+In my opinion, using [PhpRedis](https://github.com/phpredis/phpredis) and serializer as igbinary ( Laravel does not support igbinary serialization on Redis. However, this package provides igbinary serialization support for Laravel. Please check `config/jwtredis.php` file. ) in production environment gives a great performance.
 
 You can review this  [article](https://medium.com/@akalongman/phpredis-vs-predis-comparison-on-real-production-data-a819b48cbadb) for performance comparison [PhpRedis](https://github.com/phpredis/phpredis) vs. [Predis](https://github.com/nrk/predis).
 

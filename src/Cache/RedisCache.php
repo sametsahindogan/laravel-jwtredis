@@ -2,7 +2,7 @@
 
 namespace Sametsahindogan\JWTRedis\Cache;
 
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 use Sametsahindogan\JWTRedis\Contracts\RedisCacheContract;
 
 class RedisCache implements RedisCacheContract
@@ -45,7 +45,13 @@ class RedisCache implements RedisCacheContract
      */
     public function getCache()
     {
-        return Cache::get($this->key);
+        $data = Redis::get($this->key);
+
+        if (!is_null($data)) {
+            return $this->unserialize($data);
+        }
+
+        return $data;
     }
 
     /**
@@ -53,7 +59,7 @@ class RedisCache implements RedisCacheContract
      */
     public function removeCache()
     {
-        return Cache::forget($this->key);
+        return Redis::del($this->key);
     }
 
     /**
@@ -77,9 +83,7 @@ class RedisCache implements RedisCacheContract
     {
         $this->setTime();
 
-        return Cache::remember($this->key, $this->time, function () {
-            return $this->data;
-        });
+        return Redis::setex($this->key, $this->time, $this->serialize($this->data));
     }
 
     /**
@@ -90,5 +94,33 @@ class RedisCache implements RedisCacheContract
         $this->time = (config('jwtredis.redis_ttl_jwt') ? config('jwt.ttl') : config('jwtredis.redis_ttl')) * 60;
 
         return $this;
+    }
+
+    /**
+     * @param $value
+     * @return int|string
+     */
+    protected function serialize($value)
+    {
+        if (config('jwtredis.igbinary_serialization')) {
+            return igbinary_serialize($value);
+        }
+
+        return serialize($value);
+    }
+
+    /**
+     * Unserialize the value.
+     *
+     * @param mixed $value
+     * @return mixed
+     */
+    protected function unserialize($value)
+    {
+        if (config('jwtredis.igbinary_serialization')) {
+            return igbinary_unserialize($value);
+        }
+
+        return unserialize($value);
     }
 }
