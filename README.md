@@ -286,7 +286,7 @@ In my opinion, using [PhpRedis](https://github.com/phpredis/phpredis) and serial
 You can review this  [article](https://medium.com/@akalongman/phpredis-vs-predis-comparison-on-real-production-data-a819b48cbadb) for performance comparison [PhpRedis](https://github.com/phpredis/phpredis) vs. [Predis](https://github.com/nrk/predis).
 
 ## Integrate with [Laravel Swoole Package](https://github.com/swooletw/laravel-swoole)
-This package fully compatible with Laravel Swoole package. If you want to use it together, all you have to do is change the `instances` and `providers` arrays in your `config/swoole_http.php` config as follows:
+This package fully compatible with  [Laravel Swoole](https://github.com/swooletw/laravel-swoole) package. If you want to use it together, all you have to do is change the `instances` and `providers` arrays in your `config/swoole_http.php` config as follows:
 
 ```php
     /*
