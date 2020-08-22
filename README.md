@@ -275,7 +275,6 @@ You can customize some options in that package. Check `config/jwtredis.php` file
 Here is an [example](https://github.com/sametsahindogan/laravel-jwtredis-example) using laravel-jwtredis. You can examine in detail.
 
 ## Performance Improvements Tips
-This package requirement the predis package by default.
 
 You may install the PhpRedis PHP extension via PECL. The extension is more complex to install but may yield better performance for applications that make heavy use of Redis. Predis is the alternative for PhpRedis on pure PHP and does not require any additional C extension by default.
 
