@@ -16,7 +16,6 @@ on Redis. This observer is triggered `when you assign roles & permissions to use
 and delete to your user` model.
 
 ## Requirements
-
 This package work with together [tymondesigns/jwt-auth](https://github.com/tymondesigns/jwt-auth) and [spatie/laravel-permission](https://github.com/spatie/laravel-permission) package under the hood.
 
 ![#](https://placehold.it/15/f03c15/000000?text=+) `Make sure to install and configure these dependencies. You must publish, migrate etc. all packages.` ![#](https://placehold.it/15/f03c15/000000?text=+)
@@ -27,7 +26,6 @@ This package work with together [tymondesigns/jwt-auth](https://github.com/tymon
 - [sametsahindogan/response-object-creator](https://github.com/sametsahindogan/response-object-creator) **>= 1.0.x** (**Recommended 1.0.2**)
 
 ## Installation
-
 ```bash
 composer require sametsahindogan/laravel-jwtredis
 ```
@@ -62,7 +60,6 @@ php artisan vendor:publish --provider='Sametsahindogan\JWTRedis\JWTRedisServiceP
 ```
 
 ## Configurations
-
 When everything is done, don't forget to add this Trait to your user model.
 ```php
 use JWTRedisHasRoles;
@@ -77,7 +74,6 @@ You need to add `$routeMiddleware` array in `app/Http/Kernel.php`
 ```
 
 ## Usage
-
  You do not have any instructions for use. This package only affects the background, functions in an almost identical way to Laravel session authentication, with a few exceptions. `All you have to do is change your middleware.(I mention this below)` You can use Laravel's Auth facade,
 Tymon's JWTAuth facade and all [spatie/laravel-permission](https://github.com/spatie/laravel-permission) package methods as usual.<br>
 
@@ -107,7 +103,6 @@ Route::get("/example", "ExampleController@example")->middleware('refreshable');
 application, such as `Auth::user()` or `$user->can('permission')`, is always checked from Redis, not from the database.**
 
 ## Options
-
 You can customize some options in that package. Check `config/jwtredis.php` file.
 
 * User Model
@@ -277,7 +272,6 @@ You can customize some options in that package. Check `config/jwtredis.php` file
 ```
 
 ## Example Project
-
 Here is an [example](https://github.com/sametsahindogan/laravel-jwtredis-example) using laravel-jwtredis. You can examine in detail.
 
 ## Performance Improvements Tips
@@ -290,6 +284,29 @@ You may install the PhpRedis PHP extension via PECL. The extension is more compl
 In my opinion, using [PhpRedis](https://github.com/phpredis/phpredis) and serializer as igbinary ( Laravel does not support igbinary serialization on Redis. However, this package provides igbinary serialization support for Laravel. Please check `config/jwtredis.php` file. ) in production environment gives a great performance.
 
 You can review this  [article](https://medium.com/@akalongman/phpredis-vs-predis-comparison-on-real-production-data-a819b48cbadb) for performance comparison [PhpRedis](https://github.com/phpredis/phpredis) vs. [Predis](https://github.com/nrk/predis).
+
+## Integrate with [Laravel Swoole Package](https://github.com/swooletw/laravel-swoole)
+This package fully compatible with Laravel Swoole package. If you want to use it together, all you have to do is change the `instances` and `providers` arrays in your `config/swoole_http.php` config as follows:
+
+```php
+    /*
+    |--------------------------------------------------------------------------
+    | Instances here will be cleared on every request.
+    |--------------------------------------------------------------------------
+    */
+    'instances' => [
+        'auth'
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Providers here will be registered on every request.
+    |--------------------------------------------------------------------------
+    */
+    'providers' => [
+        \Sametsahindogan\JWTRedis\JWTRedisServiceProvider::class,
+    ],
+```
 
 ## License
 MIT © [Samet Sahindogan](https://github.com/sametsahindogan/laravel-jwtredis/blob/master/LICENSE)
