@@ -21,7 +21,7 @@ This package work with together [tymondesigns/jwt-auth](https://github.com/tymon
 
 ![#](https://placehold.it/15/f03c15/000000?text=+) `Make sure to install and configure these dependencies. You must publish, migrate etc. all packages.` ![#](https://placehold.it/15/f03c15/000000?text=+)
  
-- [nrk/predis](https://github.com/nrk/predis) **>= 1.1** (**Recommended 1.1**)
+- If your PHP setup does not have the [Redis](https://github.com/phpredis/phpredis) extension or Laravel's Redis driver is not selected as [phpredis](https://laravel.com/docs/7.x/redis#phpredis), you must install [nrk/predis](https://github.com/nrk/predis)  **>= 1.1** (**Recommended 1.1**)
 - [tymondesigns/jwt-auth](https://github.com/tymondesigns/jwt-auth) **>= 1.0** (**Recommended 1.0.x**)
 - [spatie/laravel-permission](https://github.com/spatie/laravel-permission) **>= 3.3** (**Recommended 3.3**)
 - [sametsahindogan/response-object-creator](https://github.com/sametsahindogan/response-object-creator) **>= 1.0.x** (**Recommended 1.0.2**)
