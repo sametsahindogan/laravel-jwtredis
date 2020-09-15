@@ -23,7 +23,7 @@ return [
     | * ~ Don't forget to run Queue Worker if this option is true. ~ *
     |
     */
-    'observer_events_queue' => false,
+    'observer_events_queue' => env('JWTREDIS_OBSERVER_EVENTS_QUEUE', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -53,7 +53,7 @@ return [
     |  User stored in Redis redis_ttl value time.
     |
     */
-    'redis_ttl' => 60,
+    'redis_ttl' => env('JWTREDIS_REDIS_TTL', 60),
 
     /*
     |--------------------------------------------------------------------------
@@ -63,7 +63,7 @@ return [
     | If it's user id is 1, this user stored in Redis as auth_1.
     |
     */
-    'redis_auth_prefix' => 'auth_',
+    'redis_auth_prefix' => env('JWTREDIS_REDIS_AUTH_PREFIX', 'auth_'),
 
     /*
     |--------------------------------------------------------------------------
@@ -76,7 +76,7 @@ return [
     | * ~ Don't forget to enable igbinary extension if this option is true. ~ *
     |
     */
-    'igbinary_serialization' => false,
+    'igbinary_serialization' => env('JWTREDIS_IGBINARY_SERIALIZATION', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -87,7 +87,7 @@ return [
     | the your application.
     |
     */
-    'check_banned_user' => false,
+    'check_banned_user' => env('JWTREDIS_CHECK_BANNED_USER', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -141,63 +141,63 @@ return [
     'errors' => [
 
         'default' => [
-            'title'   => 'Operation Failed',
+            'title' => 'Operation Failed',
             'message' => 'An error occurred.',
-            'code'    => 0,
+            'code' => 0,
         ],
 
         'AccountBlockedException' => [
-            'title'   => 'Operation Failed',
+            'title' => 'Operation Failed',
             'message' => 'Your account has been blocked by the administrator.',
-            'code'    => 1,
+            'code' => 1,
         ],
 
         'TokenNotProvidedException' => [
-            'title'   => 'Operation Failed',
+            'title' => 'Operation Failed',
             'message' => 'Token not provided.',
-            'code'    => 2,
+            'code' => 2,
         ],
 
         'JWTException' => [
-            'title'   => 'Operation Failed',
+            'title' => 'Operation Failed',
             'message' => 'A token is required',
-            'code'    => 3,
+            'code' => 3,
         ],
 
         'TokenBlacklistedException' => [
-            'title'   => 'Operation Failed',
+            'title' => 'Operation Failed',
             'message' => 'The token has been blacklisted.',
-            'code'    => 4,
+            'code' => 4,
         ],
 
         'TokenExpiredException' => [
-            'title'   => 'Operation Failed',
+            'title' => 'Operation Failed',
             'message' => 'Token has expired.',
-            'code'    => 5,
+            'code' => 5,
         ],
 
         'TokenInvalidException' => [
-            'title'   => 'Operation Failed',
+            'title' => 'Operation Failed',
             'message' => 'Could not decode or verify token.',
-            'code'    => 6,
+            'code' => 6,
         ],
 
         'PermissionException' => [
-            'title'   => 'Operation Failed',
+            'title' => 'Operation Failed',
             'message' => 'User does not have the right permissions.',
-            'code'    => 7,
+            'code' => 7,
         ],
 
         'RoleException' => [
-            'title'   => 'Operation Failed',
+            'title' => 'Operation Failed',
             'message' => 'User does not have the right roles.',
-            'code'    => 8,
+            'code' => 8,
         ],
 
         'RoleOrPermissionException' => [
-            'title'   => 'Operation Failed',
+            'title' => 'Operation Failed',
             'message' => 'User does not have the right roles or permissions.',
-            'code'    => 9,
+            'code' => 9,
         ],
     ],
 ];
