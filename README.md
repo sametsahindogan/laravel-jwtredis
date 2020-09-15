@@ -143,7 +143,7 @@ You can customize some options in that package. Check `config/jwtredis.php` file
     | * ~ Don't forget to run Queue Worker if this option is true. ~ *
     |
     */
-    'observer_events_queue' => true,
+    'observer_events_queue' => env('JWTREDIS_OBSERVER_EVENTS_QUEUE', false),
 ```
 * Cache Time
 ```php
@@ -166,7 +166,7 @@ You can customize some options in that package. Check `config/jwtredis.php` file
     | you can set this value as minute.
     |
     */
-    'redis_ttl' => 60,
+    'redis_ttl' => env('JWTREDIS_REDIS_TTL', 60),
 ```
 * Cache Prefix
 ```php
@@ -178,7 +178,7 @@ You can customize some options in that package. Check `config/jwtredis.php` file
     | If it's user id is 1, this user stored in Redis as auth_1.
     |
     */
-    'redis_auth_prefix' => 'auth_',
+    'redis_auth_prefix' => env('JWTREDIS_REDIS_AUTH_PREFIX', 'auth_'),
 ```
 * Serialization
 ```php
@@ -193,7 +193,7 @@ You can customize some options in that package. Check `config/jwtredis.php` file
    | * ~ Don't forget to enable igbinary extension if this option is true. ~ *
    |
    */
-    'igbinary_serialization' => false,
+    'igbinary_serialization' => env('JWTREDIS_IGBINARY_SERIALIZATION', false),
 ```
 * Banned User Check
 ```php
@@ -206,7 +206,7 @@ You can customize some options in that package. Check `config/jwtredis.php` file
     | the your application.
     |
     */
-    'check_banned_user' => true,
+    'check_banned_user' => env('JWTREDIS_CHECK_BANNED_USER', false),
 
     /*
     |--------------------------------------------------------------------------
