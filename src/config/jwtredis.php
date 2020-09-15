@@ -141,63 +141,63 @@ return [
     'errors' => [
 
         'default' => [
-            'title' => 'Operation Failed',
+            'title'   => 'Operation Failed',
             'message' => 'An error occurred.',
-            'code' => 0,
+            'code'    => 0,
         ],
 
         'AccountBlockedException' => [
-            'title' => 'Operation Failed',
+            'title'   => 'Operation Failed',
             'message' => 'Your account has been blocked by the administrator.',
-            'code' => 1,
+            'code'    => 1,
         ],
 
         'TokenNotProvidedException' => [
-            'title' => 'Operation Failed',
+            'title'   => 'Operation Failed',
             'message' => 'Token not provided.',
-            'code' => 2,
+            'code'    => 2,
         ],
 
         'JWTException' => [
-            'title' => 'Operation Failed',
+            'title'   => 'Operation Failed',
             'message' => 'A token is required',
-            'code' => 3,
+            'code'    => 3,
         ],
 
         'TokenBlacklistedException' => [
-            'title' => 'Operation Failed',
+            'title'   => 'Operation Failed',
             'message' => 'The token has been blacklisted.',
-            'code' => 4,
+            'code'    => 4,
         ],
 
         'TokenExpiredException' => [
-            'title' => 'Operation Failed',
+            'title'   => 'Operation Failed',
             'message' => 'Token has expired.',
-            'code' => 5,
+            'code'    => 5,
         ],
 
         'TokenInvalidException' => [
-            'title' => 'Operation Failed',
+            'title'   => 'Operation Failed',
             'message' => 'Could not decode or verify token.',
-            'code' => 6,
+            'code'    => 6,
         ],
 
         'PermissionException' => [
-            'title' => 'Operation Failed',
+            'title'   => 'Operation Failed',
             'message' => 'User does not have the right permissions.',
-            'code' => 7,
+            'code'    => 7,
         ],
 
         'RoleException' => [
-            'title' => 'Operation Failed',
+            'title'   => 'Operation Failed',
             'message' => 'User does not have the right roles.',
-            'code' => 8,
+            'code'    => 8,
         ],
 
         'RoleOrPermissionException' => [
-            'title' => 'Operation Failed',
+            'title'   => 'Operation Failed',
             'message' => 'User does not have the right roles or permissions.',
-            'code' => 9,
+            'code'    => 9,
         ],
     ],
 ];
