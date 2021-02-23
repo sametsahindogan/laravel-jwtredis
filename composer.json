@@ -3,9 +3,9 @@
     "description": "This package allows JWT-authenticated users to be stored and management in Redis with their roles, permissions, statuses and anything you want.",
     "type": "library",
     "require": {
-        "php": ">=7.2",
-        "tymon/jwt-auth": "1.0.*",
-        "spatie/laravel-permission": "^3.3",
+        "php": ">=7.2.5",
+        "tymon/jwt-auth": "^1.0.2",
+        "spatie/laravel-permission": "^4.0",
         "sametsahindogan/response-object-creator": "1.0.2"
     },
     "license": "MIT",
