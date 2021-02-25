@@ -35,7 +35,7 @@ class UserRedisObserver
     }
 
     /**
-     * @param Model $model
+     * @param Model  $model
      * @param string $action
      */
     protected function handler(Model $model, string $action)
