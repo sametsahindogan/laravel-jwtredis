@@ -14,6 +14,7 @@ class UserRedisObserver
      * Handle the Model "updated" event.
      *
      * @param Model $model
+     *
      * @return void
      */
     public function updated(Model $model)
@@ -25,6 +26,7 @@ class UserRedisObserver
      * Handle the Model "deleted" event.
      *
      * @param Model $model
+     *
      * @return void
      */
     public function deleted(Model $model)
@@ -34,6 +36,7 @@ class UserRedisObserver
 
     /**
      * @param Model $model
+     *
      * @param string $action
      */
     protected function handler(Model $model, string $action)
