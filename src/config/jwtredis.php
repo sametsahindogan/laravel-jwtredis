@@ -19,6 +19,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | If this option is true, model's events are processed as a job on queue.
+    | The job will be executed after the database transactions are commit.
     |
     | * ~ Don't forget to run Queue Worker if this option is true. ~ *
     |

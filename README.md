@@ -21,9 +21,11 @@ This package work with together [tymondesigns/jwt-auth](https://github.com/tymon
 ![#](https://placehold.it/15/f03c15/000000?text=+) `Make sure to install and configure these dependencies. You must publish, migrate etc. all packages.` ![#](https://placehold.it/15/f03c15/000000?text=+)
  
 - If your PHP setup does not have the [Redis](https://github.com/phpredis/phpredis) extension or Laravel's Redis driver is not selected as [phpredis](https://laravel.com/docs/7.x/redis#phpredis), you must install [nrk/predis](https://github.com/nrk/predis)  **>= 1.1** (**Recommended 1.1**)
-- [tymondesigns/jwt-auth](https://github.com/tymondesigns/jwt-auth) **>= 1.0** (**Recommended 1.0.x**)
-- [spatie/laravel-permission](https://github.com/spatie/laravel-permission) **>= 3.3** (**Recommended 3.3**)
-- [sametsahindogan/response-object-creator](https://github.com/sametsahindogan/response-object-creator) **>= 1.0.x** (**Recommended 1.0.2**)
+- PHP **>= 7.2.5**
+- Laravel **>= 6.0**
+- [tymondesigns/jwt-auth](https://github.com/tymondesigns/jwt-auth) **>= 1.0** (**Recommended 1.0.2**)
+- [spatie/laravel-permission](https://github.com/spatie/laravel-permission) **>= 4.0** (**Recommended 4.0.0**)
+- [sametsahindogan/response-object-creator](https://github.com/sametsahindogan/response-object-creator) **>= 1.0** (**Recommended 1.0.2**)
 
 ## Installation
 ```bash
@@ -139,6 +141,7 @@ You can customize some options in that package. Check `config/jwtredis.php` file
     |--------------------------------------------------------------------------
     |
     | If this option is true, model's events are processed as a job on queue.
+    | The job will be executed after the database transactions are commit.
     |
     | * ~ Don't forget to run Queue Worker if this option is true. ~ *
     |
