@@ -18,7 +18,7 @@ and delete to your user` model.
 ## Requirements
 This package work with together [tymondesigns/jwt-auth](https://github.com/tymondesigns/jwt-auth) and [spatie/laravel-permission](https://github.com/spatie/laravel-permission) package under the hood.
 
-![#](https://placehold.it/15/f03c15/000000?text=+) `Make sure to install and configure these dependencies. You must publish, migrate etc. all packages.` ![#](https://placehold.it/15/f03c15/000000?text=+)
+!`Make sure to install and configure these dependencies. You must publish, migrate etc. all packages.`!
  
 - If your PHP setup does not have the [Redis](https://github.com/phpredis/phpredis) extension or Laravel's Redis driver is not selected as [phpredis](https://laravel.com/docs/7.x/redis#phpredis), you must install [nrk/predis](https://github.com/nrk/predis)  **>= 1.1** (**Recommended 1.1**)
 - PHP **>= 7.2.5**
